@@ -32,7 +32,7 @@ project.ext {
     mcVersion="1.7.10"
 }
 
-version = "0.1." + project.ext.buildNum
+version = project.ext.mcVersion + "0.1." + project.ext.buildNum
 group= "k4unl.minecraft.k4lib" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "k4lib"
 
@@ -82,13 +82,11 @@ processResources
 }
 
 jar {
-    appendix = "${project.ext.mcVersion}"
     classifier = "universal"
 }
 
 task deobfJar(type: Jar) {
     from(sourceSets.main.output) {
-        appendix = "${project.ext.mcVersion}"
         classifier = "deobf"
     }
 }
