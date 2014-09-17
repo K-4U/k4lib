@@ -90,7 +90,7 @@ uploadArchives {
     dependsOn 'reobf'
     repositories {
         mavenDeployer {
-            repository(url: "file://" + System.getenv("local_maven"))
+            repository(url: "file://srv/maven")// + System.getenv("local_maven"))
             pom {
                 groupId = project.group
                 version = project.version
