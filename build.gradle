@@ -15,16 +15,6 @@ buildscript {
     }
 }
 
-// define the properties file
-//ext.configFile = file "build.properties"
-
-//configFile.withReader {
-    // read config. it shall from now on be referenced as simply config or as project.config
-//    def prop = new Properties()
-//    prop.load(it)
-//    ext.config = new ConfigSlurper().parse prop
-//}
-
 apply plugin: 'forge'
 
 project.ext {
@@ -39,7 +29,6 @@ archivesBaseName = "k4lib"
 
 minecraft {
     version = "${project.ext.mcVersion}-10.13.0.1208"
-    assetDir = "../minecraft/assets"
     replace "@VERSION@", project.version
 	replace "@BUILDNUM@", project.ext.buildNum
 }
@@ -104,6 +93,8 @@ task("uploadJars", dependsOn:"reobf") {
             repositories {
                 mavenDeployer {
                     repository(url: "file://" + System.getenv("local_maven"))
+                    pom.version = '1.0Maven'
+                    pom.artifactId = 'myMavenName'
                 }
             }
         }
