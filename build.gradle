@@ -22,7 +22,7 @@ project.ext {
     buildNum = System.getenv("BUILD_NUMBER")
     mcVersion="1.7.10"
 }
-/*
+
 configurations {
     deployerJars
 }
@@ -30,7 +30,7 @@ configurations {
 dependencies {
     //deployerJars "org.apache.maven.wagon:wagon-ssh:2.2"
 }
-*/
+
 version = project.ext.mcVersion + "-0.1." + project.ext.buildNum
 group= "k4unl" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "k4lib"
