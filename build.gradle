@@ -22,15 +22,15 @@ project.ext {
     buildNum = System.getenv("BUILD_NUMBER")
     mcVersion="1.7.10"
 }
-
+/*
 configurations {
     deployerJars
 }
 
 dependencies {
-    deployerJars "org.apache.maven.wagon:wagon-ssh:2.2"
+    //deployerJars "org.apache.maven.wagon:wagon-ssh:2.2"
 }
-
+*/
 version = project.ext.mcVersion + "-0.1." + project.ext.buildNum
 group= "k4unl" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "k4lib"
@@ -94,6 +94,7 @@ artifacts {
     archives deobfJar
 }
 
+/*
 uploadArchives {
     dependsOn 'reobf'
     repositories {
@@ -126,7 +127,7 @@ uploadArchives {
                             url 'https://github.com/kihira/FoxLib/blob/master/LICENSE'
                             distribution 'repo'
                         }
-                    }*/
+                    }*//*
                     developers {
                         developer {
                             id 'K4Unl'
@@ -139,3 +140,4 @@ uploadArchives {
         }
     }
 }
+*/
