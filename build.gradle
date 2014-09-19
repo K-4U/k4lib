@@ -83,10 +83,7 @@ task deobfJar(type: Jar) {
 
 
 artifacts {
-    archives sourceJar
-    archives javadocJar
     archives deobfJar
-    archives apiJar
 }
 
 uploadArchives {
