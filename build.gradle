@@ -83,14 +83,20 @@ task deobfJar(type: Jar) {
 
 
 artifacts {
+    archives sourceJar
+    archives javadocJar
     archives deobfJar
+    archives apiJar
 }
 
 uploadArchives {
     dependsOn 'reobf'
     repositories {
         mavenDeployer {
-            repository(url: "file:///srv/maven")// + System.getenv("local_maven"))
+            configuration = "org.apache.maven.wagon:wagon-ssh:2.2"
+            repository(url: System.getenv("maven_ssh")){
+                authentication(userName: System.getenv("maven_user"), passWord: System.getenv("maven_pass"))
+            }
             pom {
                 groupId = project.group
                 version = project.version
