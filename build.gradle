@@ -23,6 +23,14 @@ project.ext {
     mcVersion="1.7.10"
 }
 
+configurations {
+    deployerJars
+}
+
+dependencies {
+    deployerJars "org.apache.maven.wagon:wagon-ssh:2.2"
+}
+
 version = project.ext.mcVersion + "-0.1." + project.ext.buildNum
 group= "k4unl" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "k4lib"
@@ -90,7 +98,7 @@ uploadArchives {
     dependsOn 'reobf'
     repositories {
         mavenDeployer {
-            configuration = "org.apache.maven.wagon:wagon-ssh:2.2"
+            configuration = configurations.deployerJars
             repository(url: System.getenv("maven_ssh")){
                 authentication(userName: System.getenv("maven_user"), passWord: System.getenv("maven_pass"))
             }
