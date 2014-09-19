@@ -99,11 +99,11 @@ uploadArchives {
     dependsOn 'reobf'
     repositories {
         mavenDeployer {
-            //configuration = configurations.deployerJars
-            /*repository(url: System.getenv("maven_ssh")){
+            configuration = configurations.deployerJars
+            repository(url: System.getenv("maven_ssh")){
                 authentication(userName: System.getenv("maven_user"), password: System.getenv("maven_pass"))
-            }*/
-            repository(url: "file://" + System.getenv("local_maven"))
+            }
+            //repository(url: "file://" + System.getenv("local_maven"))
             /*pom {
                 groupId = project.group
                 version = project.version
