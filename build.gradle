@@ -99,11 +99,12 @@ uploadArchives {
     dependsOn 'reobf'
     repositories {
         mavenDeployer {
-            configuration = configurations.deployerJars
-            repository(url: System.getenv("maven_ssh")){
+            //configuration = configurations.deployerJars
+            /*repository(url: System.getenv("maven_ssh")){
                 authentication(userName: System.getenv("maven_user"), password: System.getenv("maven_pass"))
-            }
-            pom {
+            }*/
+            repository(url: "file://" + System.getenv("local_maven"))
+            /*pom {
                 groupId = project.group
                 version = project.version
                 artifactId = project.archivesBaseName
@@ -127,7 +128,7 @@ uploadArchives {
                             url 'https://github.com/kihira/FoxLib/blob/master/LICENSE'
                             distribution 'repo'
                         }
-                    }*/
+                    }*//*
                     developers {
                         developer {
                             id 'K4Unl'
@@ -136,7 +137,7 @@ uploadArchives {
                         }
                     }
                 }
-            }
+            }*/
         }
     }
 }
