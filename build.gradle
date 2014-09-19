@@ -28,7 +28,7 @@ configurations {
 }
 
 dependencies {
-    deployerJars "org.apache.maven.wagon:wagon-ssh:2.2"
+    deployerJars "org.apache.maven.wagon:wagon-ssh-external:2.2"
 }
 
 version = project.ext.mcVersion + "-0.1." + project.ext.buildNum
@@ -104,7 +104,7 @@ uploadArchives {
                 authentication(userName: System.getenv("maven_user"), password: System.getenv("maven_pass"))
             }
             //repository(url: "file://" + System.getenv("local_maven"))
-            /*pom {
+            pom {
                 groupId = project.group
                 version = project.version
                 artifactId = project.archivesBaseName
@@ -128,7 +128,7 @@ uploadArchives {
                             url 'https://github.com/kihira/FoxLib/blob/master/LICENSE'
                             distribution 'repo'
                         }
-                    }*//*
+                    }*/
                     developers {
                         developer {
                             id 'K4Unl'
@@ -137,7 +137,7 @@ uploadArchives {
                         }
                     }
                 }
-            }*/
+            }
         }
     }
 }
