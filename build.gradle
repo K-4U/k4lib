@@ -28,7 +28,7 @@ configurations {
 }
 
 dependencies {
-    //deployerJars "org.apache.maven.wagon:wagon-ssh:2.2"
+    deployerJars "org.apache.maven.wagon:wagon-ssh:2.2"
 }
 
 version = project.ext.mcVersion + "-0.1." + project.ext.buildNum
