@@ -94,7 +94,7 @@ artifacts {
     archives deobfJar
 }
 
-/*
+
 uploadArchives {
     dependsOn 'reobf'
     repositories {
@@ -127,7 +127,7 @@ uploadArchives {
                             url 'https://github.com/kihira/FoxLib/blob/master/LICENSE'
                             distribution 'repo'
                         }
-                    }*//*
+                    }*/
                     developers {
                         developer {
                             id 'K4Unl'
@@ -140,4 +140,4 @@ uploadArchives {
         }
     }
 }
-*/
+
