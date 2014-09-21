@@ -28,7 +28,7 @@ configurations {
 }
 
 dependencies {
-    deployerJars "org.apache.maven.wagon:wagon-ssh:2.2"
+    deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
 }
 
 version = project.ext.mcVersion + "-0.1." + project.ext.buildNum
@@ -100,7 +100,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             configuration = configurations.deployerJars
-            repository(url: System.getenv("maven_ssh")){
+            repository(url: System.getenv("maven_ftp")){
                 authentication(userName: System.getenv("maven_user"), password: System.getenv("maven_pass"))
             }
             //repository(url: "file://" + System.getenv("local_maven"))
