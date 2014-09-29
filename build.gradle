@@ -103,14 +103,9 @@ publishing {
             groupId = project.group
             version = project.version
             artifactId = project.archivesBaseName
-            
+
             from components.java
             artifact deobfJar
-        }
-    }
-    repositories {
-        maven {
-            url "file://" + System.getenv("local_maven")
             pom {
                 groupId = project.group
                 version = project.version
@@ -129,13 +124,6 @@ publishing {
                         system 'gitlab'
                         url 'https://git.k-4u.nl/minecraft/k4lib/issues'
                     }
-                    /*licenses {
-                        license {
-                            name 'GPLv3'
-                            url 'https://github.com/kihira/FoxLib/blob/master/LICENSE'
-                            distribution 'repo'
-                        }
-                    }*/
                     developers {
                         developer {
                             id 'K4Unl'
@@ -145,6 +133,12 @@ publishing {
                     }
                 }
             }
+        }
+    }
+    repositories {
+        maven {
+            url "file://" + System.getenv("local_maven")
+
         }
     }
 }
