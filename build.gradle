@@ -103,47 +103,48 @@ publishing {
             groupId = project.group
             version = project.version
             artifactId = project.archivesBaseName
-            pom {
-                name project.archivesBaseName
-                packaging 'jar'
-                description 'K4Lib'
-                url 'http://mods.k-4u.nl'
-                scm {
-                    url 'https://git.k-4u.nl/minecraft/k4lib'
-                    connection 'scm:git:ssh://git@git.k-4u.nl:8228/minecraft/k4lib.git'
-                    developerConnection 'scm:git:ssh://git@git.k-4u.nl:8228/minecraft/k4lib.git'
-                }
-                issueManagement {
-                    system 'gitlab'
-                    url 'https://git.k-4u.nl/minecraft/k4lib/issues'
-                }
-                /*licenses {
-                    license {
-                        name 'GPLv3'
-                        url 'https://github.com/kihira/FoxLib/blob/master/LICENSE'
-                        distribution 'repo'
-                    }
-                }*/
-                developers {
-                    developer {
-                        id 'K4Unl'
-                        name 'K4Unl'
-                        roles { role 'developer' }
-                    }
-                }
-            }
-
+            
             from components.java
             artifact deobfJar
         }
     }
     repositories {
         maven {
-            //configuration = configurations.deployerJars
-            /*repository(url: System.getenv("maven_ftp")){
-                authentication(userName: System.getenv("maven_user"), password: System.getenv("maven_pass"))
-            }*/
             url "file://" + System.getenv("local_maven")
+            pom {
+                groupId = project.group
+                version = project.version
+                artifactId = project.archivesBaseName
+                project {
+                    name project.archivesBaseName
+                    packaging 'jar'
+                    description 'K4Lib'
+                    url 'http://mods.k-4u.nl'
+                    scm {
+                        url 'https://git.k-4u.nl/minecraft/k4lib'
+                        connection 'scm:git:ssh://git@git.k-4u.nl:8228/minecraft/k4lib.git'
+                        developerConnection 'scm:git:ssh://git@git.k-4u.nl:8228/minecraft/k4lib.git'
+                    }
+                    issueManagement {
+                        system 'gitlab'
+                        url 'https://git.k-4u.nl/minecraft/k4lib/issues'
+                    }
+                    /*licenses {
+                        license {
+                            name 'GPLv3'
+                            url 'https://github.com/kihira/FoxLib/blob/master/LICENSE'
+                            distribution 'repo'
+                        }
+                    }*/
+                    developers {
+                        developer {
+                            id 'K4Unl'
+                            name 'K4Unl'
+                            roles { role 'developer' }
+                        }
+                    }
+                }
+            }
         }
     }
 }
