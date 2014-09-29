@@ -16,7 +16,7 @@ buildscript {
 }
 
 apply plugin: 'forge'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 project.ext {
     buildNum = System.getenv("BUILD_NUMBER")
