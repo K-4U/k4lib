@@ -7,14 +7,14 @@ import java.util.List;
 
 public class Config {
 
-	private static final List<ConfigOption> configOptions = new ArrayList<ConfigOption>();
-	
-	public static void loadConfigOptions(Configuration c){
+    public static final List<ConfigOption> configOptions = new ArrayList<ConfigOption>();
 
-		for(ConfigOption config : configOptions){
-			config.loadFromConfig(c);
-		}
-	}
+    public static void loadConfigOptions(Configuration c) {
+
+        for (ConfigOption config : configOptions) {
+            config.loadFromConfig(c);
+        }
+    }
 
     public static boolean getBool(String key){
         for(ConfigOption config : configOptions){

@@ -39,4 +39,5 @@ public class Functions {
         }
         return new ChunkPosition(hit.blockX, hit.blockY, hit.blockZ);
     }
+
 }
