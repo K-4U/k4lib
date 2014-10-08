@@ -219,69 +219,100 @@ public class RenderHelper {
 			t.draw();
 		}
 	}
-	
+
+
+    public static boolean beginTesselatingWithTexture(){
+        Tessellator tessellator = Tessellator.instance;
+
+        boolean wasTessellating = false;
+        try {
+            tessellator.startDrawingQuads();
+        } catch (IllegalStateException e) {
+            wasTessellating = true;
+        }
+        FMLClientHandler.instance().getClient().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+
+        return wasTessellating;
+    }
+
+    public static void drawTesselatedSideTopWithTexture(Vector3fMax vector, IIcon icon){
+        Tessellator tessellator = Tessellator.instance;
+        //Top side
+        tessellator.setNormal(0, 1, 0);
+        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMinV());
+        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMaxV());
+        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMaxV());
+        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMinV());
+    }
+
+    public static void drawTesselatedSideBottomWithTexture(Vector3fMax vector, IIcon icon){
+        Tessellator tessellator = Tessellator.instance;
+        //Bottom side
+        tessellator.setNormal(0, -1, 0);
+        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMinV());
+        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV());
+        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMaxV());
+        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMinV());
+    }
+
+    public static void drawTesselatedSideWestWithTexture(Vector3fMax vector, IIcon icon){
+        Tessellator tessellator = Tessellator.instance;
+        //Draw west side:
+        tessellator.setNormal(-1, 0, 0);
+        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMinV());
+        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMaxV());
+        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMaxV());
+        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMinV());
+    }
+
+    public static void drawTesselatedSideEastWithTexture(Vector3fMax vector, IIcon icon){
+        Tessellator tessellator = Tessellator.instance;
+        //Draw east side:
+        tessellator.setNormal(1, 0, 0);
+        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMinV());
+        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMaxV());
+        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMaxV());
+        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMaxU(), icon.getMinV());
+    }
+
+    public static void drawTesselatedSideNorthWithTexture(Vector3fMax vector, IIcon icon) {
+        Tessellator tessellator = Tessellator.instance;
+        //Draw north side
+        tessellator.setNormal(0, 0, -1);
+        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMinV());
+        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMaxV());
+        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMaxV());
+        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMinV());
+    }
+
+    public static void drawTesselatedSideSouthWithTexture(Vector3fMax vector, IIcon icon){
+        Tessellator tessellator = Tessellator.instance;
+        //Draw south side
+        tessellator.setNormal(0, 0, 1);
+        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMinV());
+        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV());
+        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMaxV());
+        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMinV());
+    }
+
+    public static void stopTesselating(boolean wasTessellating){
+        if (!wasTessellating) {
+            Tessellator tessellator = Tessellator.instance;
+            tessellator.draw();
+        }
+    }
+
 	public static void drawTesselatedCubeWithTexture(Vector3fMax vector, IIcon icon){
-		Tessellator tessellator = Tessellator.instance;
+		boolean wasTessellating = beginTesselatingWithTexture();
+        drawTesselatedSideTopWithTexture(vector, icon);
+        drawTesselatedSideBottomWithTexture(vector, icon);
+        drawTesselatedSideWestWithTexture(vector, icon);
+        drawTesselatedSideEastWithTexture(vector, icon);
+        drawTesselatedSideNorthWithTexture(vector, icon);
+        drawTesselatedSideSouthWithTexture(vector, icon);
 
-		boolean wasTessellating = false;
-		try {
-			tessellator.startDrawingQuads();
-		} catch (IllegalStateException e) {
-			wasTessellating = true;
-		}
-		FMLClientHandler.instance().getClient().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
-		
-		tessellator.setTextureUV(icon.getMinU(), icon.getMinV());
-		
-		float u = icon.getMinU();
-		float v = icon.getMinV();
-		float U = icon.getMaxU();
-		float V = icon.getMaxV();
-		//Top side
-		tessellator.setNormal(0, 1, 0);
-		tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMax(), u, v);
-		tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMax(), u, V);
-		tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMin(), U, V);
-		tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMin(), U, v);
-		
-		//Bottom side
-		tessellator.setNormal(0, -1, 0);
-		tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMax(), u, v);
-		tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMax(), u, V);
-		tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMin(), U, V);
-		tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMin(), U, v);
-		
-		//Draw west side:
-		tessellator.setNormal(-1, 0, 0);
-		tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMax(), u, v);
-		tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMax(), u, V);
-		tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMin(), U, V);
-		tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMin(), U, v);
-		
-		//Draw east side:
-		tessellator.setNormal(1, 0, 0);
-		tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMin(), u, v);
-		tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMin(), u, V);
-		tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMax(), U, V);
-		tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMax(), U, v);
-		
-		//Draw north side
-		tessellator.setNormal(0, 0, -1);
-		tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMin(), u, v); 
-		tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMin(), u, V);
-		tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMin(), U, V);
-		tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMin(), U, v);
+        stopTesselating(wasTessellating);
 
-		//Draw south side
-		tessellator.setNormal(0, 0, 1);
-		tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMax(), u, v);
-		tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMax(), u, V);
-		tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMax(), U, V);
-		tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMax(), U, v);
-
-		if (!wasTessellating) {
-			tessellator.draw();
-		}
 	}
 
 		
