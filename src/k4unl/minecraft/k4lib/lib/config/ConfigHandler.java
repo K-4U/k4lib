@@ -7,11 +7,11 @@ import java.io.File;
 public class ConfigHandler {
     protected static Configuration config;
 
-    public static void init(File configFile) {
+    public static void init(Config toLoad, File configFile) {
 
         config = new Configuration(configFile);
 
-        Config.loadConfigOptions(config);
+        toLoad.loadConfigOptions(config);
 
         if (config.hasChanged()){
 			config.save();

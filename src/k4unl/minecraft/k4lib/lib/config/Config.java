@@ -5,18 +5,17 @@ import net.minecraftforge.common.config.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Config {
+public abstract class Config {
+    public final List<ConfigOption> configOptions = new ArrayList<ConfigOption>();
 
-    public static final List<ConfigOption> configOptions = new ArrayList<ConfigOption>();
-
-    public static void loadConfigOptions(Configuration c) {
+    public void loadConfigOptions(Configuration c) {
 
         for (ConfigOption config : configOptions) {
             config.loadFromConfig(c);
         }
     }
 
-    public static boolean getBool(String key){
+    public boolean getBool(String key){
         for(ConfigOption config : configOptions){
             if(config.getKey() == key){
                 return config.getBool();
@@ -25,7 +24,7 @@ public class Config {
         return false;
     }
 
-    public static int getInt(String key){
+    public int getInt(String key){
         for(ConfigOption config : configOptions){
             if(config.getKey() == key){
                 return config.getInt();
@@ -34,7 +33,7 @@ public class Config {
         return 0;
     }
 
-    public static String getString(String key){
+    public String getString(String key){
         for(ConfigOption config : configOptions){
             if(config.getKey() == key){
                 return config.getString();
@@ -43,7 +42,7 @@ public class Config {
         return "";
     }
 
-    public static char getChar(String key){
+    public char getChar(String key){
         for(ConfigOption config : configOptions){
             if(config.getKey() == key){
                 return config.getChar();
@@ -52,4 +51,5 @@ public class Config {
         return 0;
     }
 
+    public void init(){};
 }
