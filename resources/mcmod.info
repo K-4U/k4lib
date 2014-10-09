@@ -1,6 +1,6 @@
 [
     {
-        "modid":        "k4Lib",
+        "modid":        "k4lib",
         "name":         "K4Lib",
         "description":  "Library used for K4Unl's mods",
         "version":      "${version}",
