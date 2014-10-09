@@ -1,0 +1,13 @@
+[
+    {
+        "modid":        "k4Lib",
+        "name":         "K4Lib",
+        "description":  "Library used for K4Unl's mods",
+        "version":      "${version}",
+        "mcversion":    "$mcversion",
+        "authorList":   [
+            "K4Unl"
+        ]
+    }
+]       
+        

@@ -5,9 +5,9 @@ import net.minecraftforge.common.config.Configuration;
 import java.io.File;
 
 public class ConfigHandler {
-    protected static Configuration config;
+    protected Configuration config;
 
-    public static void init(Config toLoad, File configFile) {
+    public void init(Config toLoad, File configFile) {
 
         config = new Configuration(configFile);
 

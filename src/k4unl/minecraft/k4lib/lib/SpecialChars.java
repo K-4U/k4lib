@@ -1,5 +1,5 @@
 
-package k4unl.minecraft.pvpToggle.lib;
+package k4unl.minecraft.k4lib.lib;
 
 import java.util.Random;
 
