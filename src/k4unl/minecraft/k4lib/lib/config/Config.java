@@ -51,5 +51,15 @@ public abstract class Config {
         return 0;
     }
 
+    public double getDouble(String key){
+        for(ConfigOption config : configOptions){
+            if(config.getKey() == key){
+                return config.getDouble();
+            }
+        }
+        return 0;
+    }
+
+
     public void init(){};
 }
