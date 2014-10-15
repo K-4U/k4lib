@@ -17,7 +17,7 @@ public abstract class Config {
 
     public boolean getBool(String key){
         for(ConfigOption config : configOptions){
-            if(config.getKey() == key){
+            if(config.getKey().equals(key)){
                 return config.getBool();
             }
         }
@@ -26,7 +26,7 @@ public abstract class Config {
 
     public int getInt(String key){
         for(ConfigOption config : configOptions){
-            if(config.getKey() == key){
+            if(config.getKey().equals(key)){
                 return config.getInt();
             }
         }
@@ -35,7 +35,7 @@ public abstract class Config {
 
     public String getString(String key){
         for(ConfigOption config : configOptions){
-            if(config.getKey() == key){
+            if(config.getKey().equals(key)){
                 return config.getString();
             }
         }
@@ -44,7 +44,7 @@ public abstract class Config {
 
     public char getChar(String key){
         for(ConfigOption config : configOptions){
-            if(config.getKey() == key){
+            if(config.getKey().equals(key)){
                 return config.getChar();
             }
         }
@@ -53,7 +53,7 @@ public abstract class Config {
 
     public double getDouble(String key){
         for(ConfigOption config : configOptions){
-            if(config.getKey() == key){
+            if(config.getKey().equals(key)){
                 return config.getDouble();
             }
         }
