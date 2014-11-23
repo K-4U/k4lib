@@ -16,12 +16,12 @@ buildscript {
     }
 }
 
-apply plugin: 'forge'
+apply plugin: 'fml'
 apply plugin: 'maven-publish'
 
 project.ext {
     buildNum = System.getenv("BUILD_NUMBER")
-    mcVersion="1.7.10"
+    mcVersion="1.8"
 }
 
 configurations {
@@ -32,13 +32,13 @@ dependencies {
     deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
 }
 
-version = project.ext.mcVersion + "-0.1." + project.ext.buildNum
+version = project.ext.mcVersion + "-1.0." + project.ext.buildNum
 group= "k4unl" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "k4lib"
 
 
 minecraft {
-    version = "${project.ext.mcVersion}-10.13.0.1208"
+    version = "${project.ext.mcVersion}-8.0.9.1016-1.8"
     replace "@VERSION@", project.version
     replace "@BUILDNUM@", project.ext.buildNum
 }

@@ -2,10 +2,9 @@ package k4unl.minecraft.k4lib.lib;
 
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class Location {
 	private int x;
@@ -26,11 +25,11 @@ public class Location {
 		this.z = clone.z;
 	}
 	
-	public Location(int xCoord, int yCoord, int zCoord, ForgeDirection dir) {
+	/*public Location(int xCoord, int yCoord, int zCoord, ForgeDirection dir) {
 		this.x = xCoord + dir.offsetX;
 		this.y = yCoord + dir.offsetY;
 		this.z = zCoord + dir.offsetZ;
-	}
+	}*/
 	
 	public Location(int _x, int _y, int _z, int _dimension){
 		x = _x;
@@ -51,7 +50,8 @@ public class Location {
 			//Log.error("Trying to load a location with a wrong int array!");
 		}
 	}
-	
+
+	/*
 	public Location(int _x, int _y, int _z, ForgeDirection d, int offset){
 		x = _x + (d.offsetX * offset);
 		y = _y + (d.offsetY * offset);
@@ -78,7 +78,8 @@ public class Location {
 		z = _z + d.offsetZ;
 		dimension = _dimension;
 	}
-	
+	*/
+/*
 	public Location(ChunkPosition pos){
 		if(pos != null){
 			this.x = pos.chunkPosX;
@@ -86,12 +87,13 @@ public class Location {
 			this.z = pos.chunkPosZ;
 		}
 	}
-	
+
+	*/
 	public Location(MovingObjectPosition blockLookedAt) {
 		if(blockLookedAt != null){
-			this.x = blockLookedAt.blockX;
-			this.y = blockLookedAt.blockY;
-			this.z = blockLookedAt.blockZ;
+			this.x = blockLookedAt.func_178782_a().getX();
+			this.y = blockLookedAt.func_178782_a().getY();
+			this.z = blockLookedAt.func_178782_a().getZ();
 		}
 	}
 
@@ -171,32 +173,36 @@ public class Location {
 	public void addZ(int toAdd){
 		z += toAdd;
 	}
-	
+
+	/*
 	public void offset(ForgeDirection dir, int offsetInt){
 		x += dir.offsetX * offsetInt;
 		y += dir.offsetY * offsetInt;
 		z += dir.offsetZ * offsetInt;
 	}
+	*/
 	
 	public int[] getIntArray(){
 		return new int[] {x, y, z, dimension};
 	}
-	
+
 	public Block getBlock(IBlockAccess iba){
-		return iba.getBlock(x, y, z);
+		return iba.getBlockState(new BlockPos(x, y, z)).getBlock();
 	}
-	
+
+	/*
 	public Block getBlock(IBlockAccess iba, ForgeDirection dir){
-		return iba.getBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
-	}
+		return getBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
+	}*/
 	
 	public TileEntity getTE(IBlockAccess iba){
-		return iba.getTileEntity(x, y, z);
+		return iba.getTileEntity(new BlockPos(x, y, z));
 	}
-	
+
+	/*
 	public TileEntity getTE(IBlockAccess iba, ForgeDirection dir){
-		return iba.getTileEntity(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
-	}
+		return getTileEntity(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
+	}*/
 	
 	public String print() {
 		return String.format("D: " + dimension + " X: " + x + " Y: " + y + " Z: " + z);

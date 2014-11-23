@@ -17,13 +17,13 @@
 
 package k4unl.minecraft.k4lib.network;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import k4unl.minecraft.k4lib.network.messages.LocationDoublePacket;
 import k4unl.minecraft.k4lib.network.messages.LocationIntPacket;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 /**
  * 
@@ -35,6 +35,7 @@ public class NetworkHandler {
 
     public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(getModId());
     protected static int discriminant;
+
     /**
      * OVERRIDE THIS METHOD
      * @return

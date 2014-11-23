@@ -1,10 +1,8 @@
 package k4unl.minecraft.k4lib.lib.config;
 
-import net.minecraftforge.common.config.Configuration;
-
-import java.io.File;
 
 public class ConfigHandler {
+    /*
     protected Configuration config;
 
     public void init(Config toLoad, File configFile) {
@@ -17,5 +15,5 @@ public class ConfigHandler {
 			config.save();
 		}
 	}
-	
+	*/
 }

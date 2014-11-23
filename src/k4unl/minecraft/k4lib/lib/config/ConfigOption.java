@@ -1,9 +1,8 @@
 package k4unl.minecraft.k4lib.lib.config;
 
 
-import net.minecraftforge.common.config.Configuration;
-
 public class ConfigOption {
+    /*
     private String key;
 
     private boolean isBool;
@@ -27,7 +26,7 @@ public class ConfigOption {
     private double valDouble;
     private double defDouble;
 
-    private String category = Configuration.CATEGORY_GENERAL;
+    //private String category = Configuration.CATEGORY_GENERAL;
     private String comment = "";
 
     public ConfigOption(String _key, boolean _def) {
@@ -155,5 +154,5 @@ public class ConfigOption {
                 config.get(category, key, defDouble).comment = comment;
             }
         }
-    }
+    }*/
 }

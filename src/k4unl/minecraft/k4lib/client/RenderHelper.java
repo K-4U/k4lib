@@ -1,23 +1,21 @@
 package k4unl.minecraft.k4lib.client;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import k4unl.minecraft.k4lib.lib.Vector3fMax;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
+/*
     static         float       lightBottom     = 0.5F;
     static         float       lightTop        = 1.0F;
     static         float       lightEastWest   = 0.8F;
     static         float       lightNorthSouth = 0.6F;
-    private static Tessellator tess            = Tessellator.instance;
+    private static Tessellator tess            = Tessellator.getInstance();
     public static  float       pixel           = 1.0F / 16.0F;
 
     public static void vertexWithTexture(float x, float y, float z, float tL, float tT) {
@@ -155,6 +153,7 @@ public class RenderHelper {
 	 * @author Koen Beckers (K4Unl)
 	 * @param vector
 	 */
+	/*
 	public static void drawTesselatedCube(Vector3fMax vector) {
 
 		Tessellator t = Tessellator.instance;
@@ -414,7 +413,7 @@ public class RenderHelper {
 		RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), 0.0F, 0.5F);
 		
 		GL11.glColor3f(1.0F, 1.0F, 1.0F);
-		*/
+		*//*
 	}
 	
 	public static void draw2DCircle(float xCenter, float yCenter, float r){
@@ -475,18 +474,6 @@ public class RenderHelper {
 			GL11.glVertex3f(x, yCenter, z);
 		}
 		GL11.glEnd();
-		
-		/*
-		GL11.glColor3f(1.0F, 1.0F, 0.0F);
-		
-		Cylinder mainCylinder = new Cylinder();
-		GL11.glTranslatef(xCenter, yCenter, zCenter+r);
-		mainCylinder.draw(r, r, length-r*2, 10, 10);
-		
-		Sphere endCap = new Sphere();
-		endCap.draw(r, 10, 10);
-		GL11.glTranslatef(0, 0, length-r*2);
-		endCap.draw(r, 10, 10);*/
 	}
 	
 
@@ -648,4 +635,5 @@ public class RenderHelper {
 		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
 		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
 	}
+	*/
 }
