@@ -16,7 +16,7 @@ buildscript {
     }
 }
 
-apply plugin: 'fml'
+apply plugin: 'forge'
 apply plugin: 'maven-publish'
 
 project.ext {
@@ -38,7 +38,7 @@ archivesBaseName = "k4lib"
 
 
 minecraft {
-    version = "${project.ext.mcVersion}-8.0.9.1016-1.8"
+    version = "${project.ext.mcVersion}-11.14.0.1239-1.8"
     replace "@VERSION@", project.version
     replace "@BUILDNUM@", project.ext.buildNum
 }

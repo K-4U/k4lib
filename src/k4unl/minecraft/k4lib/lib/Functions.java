@@ -28,6 +28,7 @@ public class Functions {
         Vec3 entityLookVec = entity.getLook(1.0F);
         Vec3 maxDistVec = entityVec.addVector(entityLookVec.xCoord * maxDistance, entityLookVec.yCoord * maxDistance, entityLookVec.zCoord * maxDistance);
         return entity.worldObj.rayTraceBlocks(entityVec, maxDistVec);*/
+        //TODO: FIX ME
         return null;
     }
 

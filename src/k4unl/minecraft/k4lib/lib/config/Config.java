@@ -1,7 +1,12 @@
 package k4unl.minecraft.k4lib.lib.config;
 
+import net.minecraftforge.common.config.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Config {
-    /*
+
     public final List<ConfigOption> configOptions = new ArrayList<ConfigOption>();
 
     public void loadConfigOptions(Configuration c) {
@@ -58,5 +63,4 @@ public abstract class Config {
 
 
     public void init(){};
-    */
 }
