@@ -27,7 +27,7 @@ public class ConfigOption {
     private double valDouble;
     private double defDouble;
 
-    private String category;// = Configuration.CATEGORY_GENERAL;
+    private String category = Configuration.CATEGORY_GENERAL;
     private String comment = "";
 
     public ConfigOption(String _key, boolean _def) {

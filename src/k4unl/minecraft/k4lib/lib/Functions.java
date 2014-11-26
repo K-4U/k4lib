@@ -1,7 +1,12 @@
 package k4unl.minecraft.k4lib.lib;
 
+import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -21,6 +26,24 @@ public class Functions {
             ret = ret || (oreName.substring(0, list[i].length()).equals(list[i]));
         }
         return ret;
+    }
+
+    public static boolean isPlayerOpped(GameProfile player){
+        if(MinecraftServer.getServer().getConfigurationManager().getOppedPlayers().hasEntries()) {
+            for (String name : MinecraftServer.getServer().getConfigurationManager().getOppedPlayerNames()) {
+                if (name.toLowerCase().equals(player.getName().toLowerCase())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return true;
+    }
+
+    public static void sendChatMessageServerWide(World world, ChatComponentText message){
+        for (EntityPlayer player : (List<EntityPlayer>) world.playerEntities) {
+            player.addChatMessage(message);
+        }
     }
 
     public static MovingObjectPosition getEntityLookedObject(EntityLivingBase entity, float maxDistance){
