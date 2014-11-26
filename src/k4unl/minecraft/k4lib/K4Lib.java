@@ -8,7 +8,8 @@ import net.minecraftforge.fml.common.SidedProxy;
 @Mod(
   modid = ModInfo.ID,
   name = ModInfo.NAME,
-  version = ModInfo.VERSION
+  version = ModInfo.VERSION,
+  acceptableRemoteVersions="*"
 )
 
 public class K4Lib {
