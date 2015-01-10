@@ -1,9 +1,14 @@
 package k4unl.minecraft.k4lib.lib;
 
+import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.ChunkPosition;
+import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -39,5 +44,24 @@ public class Functions {
         }
         return new ChunkPosition(hit.blockX, hit.blockY, hit.blockZ);
     }
+
+    public static void sendChatMessageServerWide(World world, ChatComponentText message){
+        for (EntityPlayer player : (List<EntityPlayer>) world.playerEntities) {
+            player.addChatMessage(message);
+        }
+    }
+
+    public static boolean isPlayerOpped(GameProfile player){
+        if(MinecraftServer.getServer().getConfigurationManager().func_152603_m().func_152690_d()) {
+            for (String name : MinecraftServer.getServer().getConfigurationManager().func_152606_n()) {
+                if (name.toLowerCase().equals(player.getName().toLowerCase())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return true;
+    }
+
 
 }

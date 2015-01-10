@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Config {
-    public final List<ConfigOption> configOptions = new ArrayList<ConfigOption>();
+    public List<ConfigOption> configOptions = new ArrayList<ConfigOption>();
 
     public void loadConfigOptions(Configuration c) {
 
-        for (ConfigOption config : configOptions) {
+        for (ConfigOption config : this.configOptions) {
             config.loadFromConfig(c);
         }
     }
 
     public boolean getBool(String key){
-        for(ConfigOption config : configOptions){
+        for(ConfigOption config : this.configOptions){
             if(config.getKey().equals(key)){
                 return config.getBool();
             }
@@ -34,7 +34,7 @@ public abstract class Config {
     }
 
     public String getString(String key){
-        for(ConfigOption config : configOptions){
+        for(ConfigOption config : this.configOptions){
             if(config.getKey().equals(key)){
                 return config.getString();
             }
@@ -43,7 +43,7 @@ public abstract class Config {
     }
 
     public char getChar(String key){
-        for(ConfigOption config : configOptions){
+        for(ConfigOption config : this.configOptions){
             if(config.getKey().equals(key)){
                 return config.getChar();
             }
@@ -52,7 +52,7 @@ public abstract class Config {
     }
 
     public double getDouble(String key){
-        for(ConfigOption config : configOptions){
+        for(ConfigOption config : this.configOptions){
             if(config.getKey().equals(key)){
                 return config.getDouble();
             }
