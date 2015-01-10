@@ -95,7 +95,7 @@ artifacts {
     archives deobfJar
 }
 
-
+/*
 publishing {
     tasks.publish.dependsOn 'build'
     publications {
@@ -129,13 +129,6 @@ publishing {
                         system 'gitlab'
                         url 'https://git.k-4u.nl/minecraft/k4lib/issues'
                     }
-                    /*licenses {
-                        license {
-                            name 'GPLv3'
-                            url 'https://github.com/kihira/FoxLib/blob/master/LICENSE'
-                            distribution 'repo'
-                        }
-                    }*/
                     developers {
                         developer {
                             id 'K4Unl'
@@ -148,4 +141,18 @@ publishing {
         }
     }
 }
+*/
 
+task("uploadJars", dependsOn:"reobf") {
+    description = "uploads JARs"
+    if (System.getenv("local_maven") != null) {
+        apply plugin: 'maven'
+        uploadArchives {
+            repositories {
+                mavenDeployer {
+                    repository(url: "file://" + System.getenv("local_maven"))
+                }
+            }
+        }
+    }
+}
