@@ -95,7 +95,7 @@ artifacts {
     archives deobfJar
 }
 
-/*
+
 publishing {
     tasks.publish.dependsOn 'build'
     publications {
@@ -141,18 +141,4 @@ publishing {
         }
     }
 }
-*/
 
-task("uploadJars", dependsOn:"reobf") {
-    description = "uploads JARs"
-    if (System.getenv("local_maven") != null) {
-        apply plugin: 'maven'
-        uploadArchives {
-            repositories {
-                mavenDeployer {
-                    repository(url: "file://" + System.getenv("local_maven"))
-                }
-            }
-        }
-    }
-}
