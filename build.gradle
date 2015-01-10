@@ -24,14 +24,6 @@ project.ext {
     mcVersion="1.7.10"
 }
 
-configurations {
-    deployerJars
-}
-
-dependencies {
-    deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
-}
-
 version = project.ext.mcVersion + "-0.1." + project.ext.buildNum
 group= "k4unl" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "k4lib"
@@ -96,44 +88,29 @@ artifacts {
 }
 
 
-publishing {
-    tasks.publish.dependsOn 'build'
-    publications {
-        mavenJava(MavenPublication) {
-            groupId = project.group
-            version = project.version
-            artifactId = project.archivesBaseName
-
-            from components.java
-            artifact deobfJar
-        }
-    }
-    repositories {
-        maven {
-            url "file://" + System.getenv("local_maven")
-            pom {
-                groupId = project.group
-                version = project.version
-                artifactId = project.archivesBaseName
-                project {
-                    name project.archivesBaseName
-                    packaging 'jar'
-                    description 'K4Lib'
-                    url 'http://mods.k-4u.nl'
-                    scm {
-                        url 'https://git.k-4u.nl/minecraft/k4lib'
-                        connection 'scm:git:ssh://git@git.k-4u.nl:8228/minecraft/k4lib.git'
-                        developerConnection 'scm:git:ssh://git@git.k-4u.nl:8228/minecraft/k4lib.git'
-                    }
-                    issueManagement {
-                        system 'gitlab'
-                        url 'https://git.k-4u.nl/minecraft/k4lib/issues'
-                    }
-                    developers {
-                        developer {
-                            id 'K4Unl'
-                            name 'K4Unl'
-                            roles { role 'developer' }
+task("uploadJars", dependsOn:"reobf") {
+    description = "uploads JARs"
+    if (System.getenv("local_maven") != null) {
+        apply plugin: 'maven'
+        uploadArchives {
+            repositories {
+                mavenDeployer {
+                    repository(url: "file://" + System.getenv("local_maven"))
+                    pom {
+                        groupId = project.group
+                        version = project.version
+                        artifactId = project.archivesBaseName
+                        project {
+                            name project.archivesBaseName
+                            packaging 'jar'
+                            description 'K4Lib'
+                            developers {
+                                developer {
+                                    id 'K4Unl'
+                                    name 'K4Unl'
+                                    roles { role 'developer' }
+                                }
+                            }
                         }
                     }
                 }
@@ -141,4 +118,3 @@ publishing {
         }
     }
 }
-
