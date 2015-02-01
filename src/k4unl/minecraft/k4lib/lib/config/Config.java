@@ -60,6 +60,51 @@ public abstract class Config {
         return 0;
     }
 
+    public void setBool(String key, boolean newValue){
+        for(ConfigOption config : this.configOptions){
+            if(config.getKey().equals(key)){
+                config.setBool(newValue);
+                config.saveConfig();
+            }
+        }
+    }
+
+    public void setInt(String key, int newValue){
+        for(ConfigOption config : configOptions){
+            if(config.getKey().equals(key)){
+                config.setInt(newValue);
+                config.saveConfig();
+            }
+        }
+    }
+
+    public void setString(String key, String newValue){
+        for(ConfigOption config : this.configOptions){
+            if(config.getKey().equals(key)){
+                config.setString(newValue);
+                config.saveConfig();
+            }
+        }
+    }
+
+    public void setChar(String key, char newValue){
+        for(ConfigOption config : this.configOptions){
+            if(config.getKey().equals(key)){
+                config.setChar(newValue);
+                config.saveConfig();
+            }
+        }
+    }
+
+    public void setDouble(String key, double newValue){
+        for(ConfigOption config : this.configOptions){
+            if(config.getKey().equals(key)){
+                config.setDouble(newValue);
+                config.saveConfig();
+            }
+        }
+    }
+
 
     public void init(){};
 }

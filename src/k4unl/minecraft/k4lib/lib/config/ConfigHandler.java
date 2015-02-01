@@ -5,7 +5,7 @@ import net.minecraftforge.common.config.Configuration;
 import java.io.File;
 
 public class ConfigHandler {
-    protected Configuration config;
+    public Configuration config;
 
     public void init(Config toLoad, File configFile) {
 

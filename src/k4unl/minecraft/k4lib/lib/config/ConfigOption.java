@@ -4,6 +4,7 @@ package k4unl.minecraft.k4lib.lib.config;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConfigOption {
+    private Configuration config;
     private String key;
 
     private boolean isBool;
@@ -38,6 +39,7 @@ public class ConfigOption {
         isInt = false;
         isString = false;
         isDouble = false;
+        updateComment();
     }
 
     public ConfigOption(String _key, int _def){
@@ -48,6 +50,7 @@ public class ConfigOption {
         isInt = true;
         isString = false;
         isDouble = false;
+        updateComment();
     }
 
     public ConfigOption(String _key, String _def){
@@ -58,6 +61,7 @@ public class ConfigOption {
         isInt = false;
         isString = true;
         isDouble = false;
+        updateComment();
     }
 
     public ConfigOption(String _key, char _def){
@@ -69,6 +73,7 @@ public class ConfigOption {
         isString = false;
         isChar = true;
         isDouble = false;
+        updateComment();
     }
 
     public ConfigOption(String _key, double _def){
@@ -80,6 +85,7 @@ public class ConfigOption {
         isString = false;
         isChar = false;
         isDouble = true;
+        updateComment();
     }
 
     public ConfigOption setCategory(String newCat){
@@ -89,7 +95,22 @@ public class ConfigOption {
 
     public ConfigOption setComment(String newComment){
         comment = newComment;
+        updateComment();
         return this;
+    }
+
+    private void updateComment(){
+        if(isDouble){
+            comment += " [Default: " + defDouble + "]";
+        }else if(isBool){
+            comment += " [Default: " + def + "]";
+        }else if(isChar){
+            comment += " [Default: " + defChar + "]";
+        }else if (isInt){
+            comment += " [Default: " + defInt + "]";
+        }else if (isString){
+            comment += " [Default: " + defString + "]";
+        }
     }
 
     public String getComment(){
@@ -109,23 +130,58 @@ public class ConfigOption {
         return val;
     }
 
+    public void setBool(boolean newValue) {
+        val = newValue;
+    }
+
     public int getInt(){
         return valInt;
+    }
+
+    public void setInt(int newValue) {
+        valInt = newValue;
     }
 
     public String getString(){
         return valString;
     }
 
+    public void setString(String newVal){
+        valString = newVal;
+    }
+
     public char getChar(){
         return valChar;
+    }
+
+    public void setChar(char newValue){
+        valChar = newValue;
     }
 
     public double getDouble(){
         return valDouble;
     }
 
+    public void setDouble(double newValue){
+        valDouble = newValue;
+    }
+
+    public void saveConfig(){
+        if(isBool){
+            config.get(category, key, def).set(val);
+        }else if(isInt){
+            config.get(category, key, defInt).set(valInt);
+        }else if(isString){
+            config.get(category, key, defString).set(valString);
+        }else if(isChar){
+            config.get(category, key, defChar).set(valChar + "");
+        }else if(isDouble){
+            config.get(category, key, defDouble).set(valDouble);
+        }
+    }
+
     public void loadFromConfig(Configuration config){
+        this.config = config;
         if(isBool){
             val = config.get(category, key, def).getBoolean(def);
             if(!comment.equals("")) {
@@ -156,4 +212,6 @@ public class ConfigOption {
             }
         }
     }
+
+
 }
