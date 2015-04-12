@@ -2,13 +2,16 @@ package k4unl.minecraft.k4lib;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import k4unl.minecraft.k4lib.commands.Commands;
 import k4unl.minecraft.k4lib.lib.config.ModInfo;
 import k4unl.minecraft.k4lib.proxy.CommonProxy;
 
 @Mod(
   modid = ModInfo.ID,
   name = ModInfo.NAME,
-  version = ModInfo.VERSION
+  version = ModInfo.VERSION,
+  acceptableRemoteVersions="*"
 )
 
 public class K4Lib {
@@ -22,4 +25,10 @@ public class K4Lib {
       serverSide = "k4unl.minecraft.k4lib.proxy.CommonProxy"
     )
     public static CommonProxy proxy;
+
+    @Mod.EventHandler
+    public void onServerStart(FMLServerStartingEvent event) {
+
+        Commands.init(event);
+    }
 }

@@ -20,6 +20,12 @@ public class Location {
 		this.z = z;
 	}
 
+    public Location(String x, String y, String z) {
+        this.x = Integer.parseInt(x);
+        this.y = Integer.parseInt(y);
+        this.z = Integer.parseInt(z);
+    }
+
 	public Location(Location clone) {
 		this.x = clone.x;
 		this.y = clone.y;

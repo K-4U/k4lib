@@ -8,6 +8,7 @@ import java.util.List;
 public abstract class Config {
     public List<ConfigOption> configOptions = new ArrayList<ConfigOption>();
 
+
     public void loadConfigOptions(Configuration c) {
 
         for (ConfigOption config : this.configOptions) {
@@ -106,5 +107,7 @@ public abstract class Config {
     }
 
 
-    public void init(){};
+    public void init(){
+        configOptions.add(new ConfigOption("debug", false));
+    }
 }
