@@ -1,6 +1,7 @@
 package k4unl.minecraft.k4lib.lib;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.ChunkPosition;
@@ -12,8 +13,7 @@ public class Location {
 	private int y;
 	private int z;
 	private int dimension;
-	
-	
+
 	public Location(int x, int y, int z) {
 		this.x = x;
 		this.y = y;
@@ -24,6 +24,12 @@ public class Location {
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
         this.z = Integer.parseInt(z);
+    }
+
+    public Location(EntityPlayer player){
+        this.x = (int)player.posX;
+        this.y = (int)player.posY;
+        this.z = (int)player.posZ;
     }
 
 	public Location(Location clone) {
