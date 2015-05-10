@@ -169,15 +169,31 @@ public class ConfigOption {
     public void saveConfig(){
         if(isBool){
             config.get(category, key, def).set(val);
+            if(!comment.equals("")) {
+                config.get(category, key, def).comment = comment;
+            }
         }else if(isInt){
             config.get(category, key, defInt).set(valInt);
+            if(!comment.equals("")) {
+                config.get(category, key, defInt).comment = comment;
+            }
         }else if(isString){
             config.get(category, key, defString).set(valString);
+            if(!comment.equals("")) {
+                config.get(category, key, defString).comment = comment;
+            }
         }else if(isChar){
             config.get(category, key, defChar).set(valChar + "");
+            if(!comment.equals("")) {
+                config.get(category, key, defChar).comment = comment;
+            }
         }else if(isDouble){
             config.get(category, key, defDouble).set(valDouble);
+            if(!comment.equals("")) {
+                config.get(category, key, defDouble).comment = comment;
+            }
         }
+        config.save();
     }
 
     public void loadFromConfig(Configuration config){
