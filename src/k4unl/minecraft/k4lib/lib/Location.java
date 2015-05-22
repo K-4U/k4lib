@@ -8,6 +8,8 @@ import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import java.util.List;
+
 public class Location {
 	private int x;
 	private int y;
@@ -157,7 +159,11 @@ public class Location {
 		ret[2] = this.z;
 		return ret;
 	}
-	
+
+    public Location getNewOffset(ForgeDirection dir, int offset){
+        return new Location(this, dir, offset);
+    }
+
 	public int getDifference(Location otherLoc){
 		return (int)Math.sqrt(Math.pow(this.x - otherLoc.x, 2) + Math.pow(this.y - otherLoc.y, 2) + Math.pow(this.z - otherLoc.z, 2));
 	}
@@ -217,4 +223,13 @@ public class Location {
 	public int getDimension(){
 		return dimension;
 	}
+
+    public boolean isInList(List<Location> locationList){
+        for(Location loc : locationList){
+            if(loc.equals(this)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
