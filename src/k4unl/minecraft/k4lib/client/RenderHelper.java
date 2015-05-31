@@ -20,6 +20,7 @@ public class RenderHelper {
     private static Tessellator tess            = Tessellator.instance;
     public static  float       pixel           = 1.0F / 16.0F;
 	public static  float 	   renderPixel 	   = 1.0F / 32.0F;
+	public static  float       bigRenderPixel  = 1.0F / 64.0F;
 
     public static void vertexWithTexture(float x, float y, float z, float tL, float tT) {
 
