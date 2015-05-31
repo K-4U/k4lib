@@ -63,5 +63,9 @@ public class Functions {
         return true;
     }
 
+    public static boolean isInDev() {
+
+        return Boolean.parseBoolean(System.getProperty("k4lib.dev", "false"));
+    }
 
 }
