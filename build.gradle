@@ -30,7 +30,7 @@ archivesBaseName = "k4lib"
 
 
 minecraft {
-    version = "${project.ext.mcVersion}-10.13.0.1208"
+    version = "${project.ext.mcVersion}-10.13.4.1448-1.7.10"
     replace "@VERSION@", project.version
     replace "@BUILDNUM@", project.ext.buildNum
 }
