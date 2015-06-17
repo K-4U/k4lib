@@ -1,5 +1,7 @@
 package k4unl.minecraft.k4lib.lib;
 
+import net.minecraftforge.common.util.ForgeDirection;
+
 /**
  * @author K-4U
  */
@@ -10,6 +12,10 @@ public enum Orientation {
 
     private Orientation(int or){
         this.orientation = or;
+    }
+
+    public static Orientation calculateOrientation(ForgeDirection side, int meta){
+        return calculateOrientation(side.ordinal(), meta);
     }
 
     public static Orientation calculateOrientation(int side, int meta){
