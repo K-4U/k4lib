@@ -7,7 +7,7 @@ public class ItemStackUtils {
         if (a == null || b == null)
             return true;
 
-        if (a.getItem() == b.getItem() && a.getMaxStackSize() >= a.stackSize + b.stackSize)
+        if (a.isItemEqual(b) && a.getMaxStackSize() >= a.stackSize + b.stackSize)
             return true;
 
         return false;
