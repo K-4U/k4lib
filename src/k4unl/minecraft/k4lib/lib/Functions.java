@@ -51,8 +51,9 @@ public class Functions {
         }
     }
 
+
     public static boolean isPlayerOpped(GameProfile player){
-        if(MinecraftServer.getServer().getConfigurationManager().func_152603_m().func_152690_d()) {
+        if(MinecraftServer.getServer().getConfigurationManager().func_152606_n().length > 0) {
             for (String name : MinecraftServer.getServer().getConfigurationManager().func_152606_n()) {
                 if (name.toLowerCase().equals(player.getName().toLowerCase())) {
                     return true;
