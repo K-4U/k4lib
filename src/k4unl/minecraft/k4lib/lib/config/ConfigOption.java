@@ -165,9 +165,9 @@ public class ConfigOption {
                 config.get(category, key, defString).comment = comment;
             }
         } else if (isChar) {
-            config.get(category, key, defChar).set(valChar + "");
+            config.get(category, key, defChar + "").set(valChar + "");
             if (!comment.equals("")) {
-                config.get(category, key, defChar).comment = comment;
+                config.get(category, key, defChar + "").comment = comment;
             }
         } else if (isDouble) {
             config.get(category, key, defDouble).set(valDouble);
@@ -198,7 +198,7 @@ public class ConfigOption {
         } else if (isChar) {
             String t = config.get(category, key, defChar + "").getString();
             if (!comment.equals("")) {
-                config.get(category, key, defChar).comment = comment;
+                config.get(category, key, defChar + "").comment = comment;
             }
             if (t.length() > 0) {
                 valChar = t.charAt(0);
