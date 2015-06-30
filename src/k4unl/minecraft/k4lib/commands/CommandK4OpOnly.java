@@ -1,14 +1,13 @@
 package k4unl.minecraft.k4lib.commands;
 
 import k4unl.minecraft.k4lib.lib.Functions;
-import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 /**
  * Created by koen_000 on 12-4-2015.
  */
-public abstract class CommandK4OpOnly extends CommandBase {
+public abstract class CommandK4OpOnly extends CommandK4Base {
 
     @Override
     public boolean canCommandSenderUseCommand(ICommandSender sender){
