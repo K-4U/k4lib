@@ -24,21 +24,13 @@ project.ext {
     mcVersion="1.8"
 }
 
-configurations {
-    deployerJars
-}
-
-dependencies {
-    deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
-}
-
 version = project.ext.mcVersion + "-1.0." + project.ext.buildNum
 group= "k4unl" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "k4lib"
 
 
 minecraft {
-    version = "${project.ext.mcVersion}-11.14.1.1332"
+    version = "${project.ext.mcVersion}-11.14.3.1486"
     replace "@VERSION@", project.version
     replace "@BUILDNUM@", project.ext.buildNum
 }
@@ -112,22 +104,6 @@ task("uploadJars", dependsOn:"reobf") {
                             name project.archivesBaseName
                             packaging 'jar'
                             description 'K4Lib'
-                            scm {
-                                url 'https://github.com/K-4U/K4Lib'
-                                connection 'scm:git:git@github.com:K-4U/k4lib.git'
-                                developerConnection 'scm:git:git@github.com:K-4U/k4lib.git'
-                            }
-                            issueManagement {
-                                system 'github'
-                                url 'https://github.com/K-4U/k4lib/issues'
-                            }
-                            licenses {
-                                license {
-                                    name 'GPLv3'
-                                    url 'https://github.com/K-4U/k4lib/blob/master/LICENSE'
-                                    distribution 'repo'
-                                }
-                            }
                             developers {
                                 developer {
                                     id 'K4Unl'

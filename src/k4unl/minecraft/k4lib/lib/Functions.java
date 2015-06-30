@@ -63,4 +63,9 @@ public class Functions {
         return new Location(hit.func_178782_a().getX(), hit.func_178782_a().getY(), hit.func_178782_a().getZ());
     }
 
+    public static boolean isInDev() {
+
+        return Boolean.parseBoolean(System.getProperty("k4lib.dev", "false"));
+    }
+
 }
