@@ -40,6 +40,18 @@ public class Functions {
         return true;
     }
 
+    public static boolean isPlayerOpped(String player){
+        if(MinecraftServer.getServer().getConfigurationManager().getOppedPlayers().hasEntries()) {
+            for (String name : MinecraftServer.getServer().getConfigurationManager().getOppedPlayerNames()) {
+                if (name.toLowerCase().equals(player.toLowerCase())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return true;
+    }
+
     public static void sendChatMessageServerWide(World world, ChatComponentText message){
         for (EntityPlayer player : (List<EntityPlayer>) world.playerEntities) {
             player.addChatMessage(message);
