@@ -5,10 +5,7 @@ import com.google.gson.GsonBuilder;
 import k4unl.minecraft.k4lib.lib.Log;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetSocketAddress;
-import java.net.Socket;
+import java.net.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -122,6 +119,7 @@ public class Query {
      */
     private void sendQueryRequest() throws IOException {
         final DatagramSocket socket = new DatagramSocket();
+        //ResourceManager.afterUdpClose();
         try {
             final byte[] receiveData = new byte[10240];
             socket.setSoTimeout(2000);
@@ -166,8 +164,9 @@ public class Query {
     public void requestExtendedInfo(EnumQueryValues... values) throws IOException {
         final DatagramSocket socket = new DatagramSocket();
         try {
-            final byte[] receiveData = new byte[10240];
-            socket.setSoTimeout(2000);
+            Log.debug("Requesting extended info");
+            final byte[] receiveData = new byte[socket.getReceiveBufferSize()];
+            socket.setSoTimeout(800);
             sendPacket(socket, address, 0xFE, 0xFD, 0x09, 0x01, 0x01, 0x01, 0x01);
             final int challengeInteger;
             {
@@ -196,6 +195,7 @@ public class Query {
             
             handleExtendedPacket(receiveData, length);
         } finally {
+            Log.debug("Closing socket");
             socket.close();
         }
     }
@@ -210,11 +210,7 @@ public class Query {
 
         Log.debug(json);
         Gson nGson = new Gson();
-        Map<String, Object> jsonList = nGson.fromJson(json, HashMap.class);
-
-        for(Map.Entry<String, Object> entry: jsonList.entrySet()){
-
-        }
+        extendedValues = nGson.fromJson(json, HashMap.class);
     }
 
     /**
@@ -279,7 +275,12 @@ public class Query {
      */
     private final static DatagramPacket receivePacket(DatagramSocket socket, byte[] buffer) throws IOException {
         final DatagramPacket dp = new DatagramPacket(buffer, buffer.length);
-        socket.receive(dp);
+        try {
+            socket.receive(dp);
+        }catch(SocketTimeoutException ex){
+            socket.disconnect();
+            socket.close();
+        }
         return dp;
     }
 
@@ -297,5 +298,14 @@ public class Query {
         for(; cursor.get() < array.length && array[cursor.get()] != 0; cursor.incrementAndGet())
             ;
         return new String(Arrays.copyOfRange(array, startPosition, cursor.get()));
+    }
+
+    public Object getExtendedObject(EnumQueryValues key) {
+        if(extendedValues.containsKey(key.toString())){
+            return extendedValues.get(key.toString());
+        }else{
+            return null;
+        }
+
     }
 }
