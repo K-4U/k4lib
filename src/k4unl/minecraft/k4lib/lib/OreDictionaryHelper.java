@@ -5,9 +5,6 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
-/**
- * Created by K-4U on 22-6-2015.
- */
 public class OreDictionaryHelper {
 
     private static boolean doesOreNameExist(String name){

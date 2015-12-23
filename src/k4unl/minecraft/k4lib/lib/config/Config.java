@@ -5,8 +5,8 @@ import net.minecraftforge.common.config.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Config {
-
+public class Config {
+    public static Config INSTANCE = new Config();
     public List<ConfigOption> configOptions = new ArrayList<ConfigOption>();
 
     public void loadConfigOptions(Configuration c) {
