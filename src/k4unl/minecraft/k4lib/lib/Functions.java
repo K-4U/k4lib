@@ -29,7 +29,7 @@ public class Functions {
     }
 
     public static boolean isPlayerOpped(GameProfile player){
-        if(MinecraftServer.getServer().getConfigurationManager().getOppedPlayers().hasEntries()) {
+        if(MinecraftServer.getServer().getConfigurationManager().getOppedPlayers().getKeys().length > 0) {
             for (String name : MinecraftServer.getServer().getConfigurationManager().getOppedPlayerNames()) {
                 if (name.toLowerCase().equals(player.getName().toLowerCase())) {
                     return true;
@@ -41,7 +41,7 @@ public class Functions {
     }
 
     public static boolean isPlayerOpped(String player){
-        if(MinecraftServer.getServer().getConfigurationManager().getOppedPlayers().hasEntries()) {
+        if(MinecraftServer.getServer().getConfigurationManager().getOppedPlayers().getKeys().length > 0) {
             for (String name : MinecraftServer.getServer().getConfigurationManager().getOppedPlayerNames()) {
                 if (name.toLowerCase().equals(player.toLowerCase())) {
                     return true;
@@ -72,7 +72,7 @@ public class Functions {
         if(hit == null || hit.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) {
             return null;
         }
-        return new Location(hit.func_178782_a().getX(), hit.func_178782_a().getY(), hit.func_178782_a().getZ());
+        return new Location(hit.getBlockPos().getX(), hit.getBlockPos().getY(), hit.getBlockPos().getZ());
     }
 
     public static boolean isInDev() {

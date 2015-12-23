@@ -106,9 +106,9 @@ public class Location {
 
 	public Location(MovingObjectPosition blockLookedAt) {
 		if(blockLookedAt != null){
-			this.x = blockLookedAt.func_178782_a().getX();
-			this.y = blockLookedAt.func_178782_a().getY();
-			this.z = blockLookedAt.func_178782_a().getZ();
+			this.x = blockLookedAt.getBlockPos().getX();
+			this.y = blockLookedAt.getBlockPos().getY();
+			this.z = blockLookedAt.getBlockPos().getZ();
 		}
 	}
 

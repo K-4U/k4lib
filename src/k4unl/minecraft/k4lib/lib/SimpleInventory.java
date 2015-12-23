@@ -183,7 +183,7 @@ public class SimpleInventory implements IInventory {
 
     //TODO: Implement me
     @Override
-    public String getName() {
+    public String getCommandSenderName() {
         return null;
     }
 
