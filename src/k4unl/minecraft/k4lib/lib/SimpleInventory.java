@@ -6,15 +6,16 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.IChatComponent;
 
 /*
 Simple inventory implementation for use in Tile Entities, anywhere really
 */
 public class SimpleInventory implements IInventory {
     protected final ItemStack[] inventory;
-    protected final String      inventoryName;
-    protected final int         inventoryLimit;
-    protected       Container   owner;
+    protected final String inventoryName;
+    protected final int inventoryLimit;
+    protected Container owner;
 
     public SimpleInventory(int slots, String inventoryName, int inventoryLimit, Container container) {
         this.inventoryName = inventoryName;
@@ -90,16 +91,6 @@ public class SimpleInventory implements IInventory {
     }
 
     @Override
-    public String getInventoryName() {
-        return inventoryName;
-    }
-
-    @Override
-    public boolean hasCustomInventoryName() {
-        return !inventoryName.equals("");
-    }
-
-    @Override
     public int getInventoryStackLimit() {
         return inventoryLimit;
     }
@@ -109,24 +100,52 @@ public class SimpleInventory implements IInventory {
 
     }
 
+    //TODO: Implement me
     @Override
     public boolean isUseableByPlayer(EntityPlayer player) {
         return true;
     }
 
+    //TODO: Implement me
     @Override
-    public void openInventory() {
+    public void openInventory(EntityPlayer playerIn) {
 
     }
 
+    //TODO: Implement me
     @Override
-    public void closeInventory() {
+    public void closeInventory(EntityPlayer playerIn) {
 
     }
 
+    //TODO: Implement me
     @Override
     public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_) {
         return false;
+    }
+
+    //TODO: Implement me
+    @Override
+    public int getField(int id) {
+        return 0;
+    }
+
+    //TODO: Implement me
+    @Override
+    public void setField(int id, int value) {
+
+    }
+
+    //TODO: Implement me
+    @Override
+    public int getFieldCount() {
+        return 0;
+    }
+
+    //TODO: Implement me
+    @Override
+    public void clear() {
+
     }
 
     public void load(NBTTagCompound nbt) {
@@ -160,5 +179,23 @@ public class SimpleInventory implements IInventory {
             }
         }
         nbt.setTag("Inventory", itemList);
+    }
+
+    //TODO: Implement me
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    //TODO: Implement me
+    @Override
+    public boolean hasCustomName() {
+        return false;
+    }
+
+    //TODO: Implement me
+    @Override
+    public IChatComponent getDisplayName() {
+        return null;
     }
 }
