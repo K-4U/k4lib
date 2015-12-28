@@ -30,7 +30,7 @@ minecraft {
     replace "@VERSION@", project.version
     replace "@BUILDNUM@", project.ext.buildNum
 
-    mappings = "snapshot_20151122"
+    mappings = "snapshot_20151228"
 
     runDir = "../Minecraft/"
 }
