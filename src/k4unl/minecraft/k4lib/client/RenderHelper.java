@@ -1,19 +1,30 @@
 package k4unl.minecraft.k4lib.client;
 
+import k4unl.minecraft.k4lib.lib.Vector3fMax;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
-/*
-    static         float       lightBottom     = 0.5F;
-    static         float       lightTop        = 1.0F;
-    static         float       lightEastWest   = 0.8F;
-    static         float       lightNorthSouth = 0.6F;
-    private static Tessellator tess            = Tessellator.getInstance();
-    public static  float       pixel           = 1.0F / 16.0F;
-	public static  float 	   renderPixel 	   = 1.0F / 32.0F;
-	public static  float       bigRenderPixel  = 1.0F / 64.0F;
+
+    static         float         lightBottom     = 0.5F;
+    static         float         lightTop        = 1.0F;
+    static         float         lightEastWest   = 0.8F;
+    static         float         lightNorthSouth = 0.6F;
+    private static Tessellator   tess            = Tessellator.getInstance();
+    private static WorldRenderer worldRenderer   = tess.getWorldRenderer();
+    public static  float         pixel           = 1.0F / 16.0F;
+    public static  float         renderPixel     = 1.0F / 32.0F;
+    public static  float         bigRenderPixel  = 1.0F / 64.0F;
 
     public static void vertexWithTexture(float x, float y, float z, float tL, float tT) {
 
@@ -21,208 +32,206 @@ public class RenderHelper {
         GL11.glVertex3f(x, y, z);
     }
 
-    public static void tesselatedTexture(float x, float y, float z, float tL, float tT){
-		tess.addVertexWithUV(x, y, z, tL, tT);
-	}
-	
-	public static void startTesselating(){
-		tess.startDrawingQuads();
-	}
-	
-	public static void tesselatorDraw(){
-		tess.draw();
-	}
-	
-	public static void drawCube(Vector3fMax vector){
-		drawTexturedCube(vector);
-	}
-	
-	public static void drawCube(Vector3fMax vector, boolean doColors){
-		if(doColors){
-			drawColoredCube(vector);
-		}else{
-			drawCube(vector);
-		}
-	}
-	
-	public static void drawColoredCube(Vector3fMax vector){
-		//Top side
-		GL11.glColor3f(1.0F, 0.0F, 0.0F);
-		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
-		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
-		
-		//Bottom side
-		GL11.glColor3f(1.0F, 1.0F, 0.0F);
-		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
-		
-		//Draw west side:
-		GL11.glColor3f(0.0F, 1.0F, 0.0F);
-		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
-		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
-		
-		//Draw east side:
-		GL11.glColor3f(0.0F, 1.0F, 1.0F);
-		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
-		
-		//Draw north side
-		GL11.glColor3f(0.0F, 0.0F, 1.0F);
-		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin()); 
-		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
+    public static void tesselatedTexture(float x, float y, float z, float tL, float tT) {
+        worldRenderer.pos(x, y, z).tex(tL, tT).endVertex();
+    }
 
-		//Draw south side
-		GL11.glColor3f(0.0F, 0.0F, 0.0F);
-		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
-	}	
-	
-	public static void setARGBFromHex(int hexColor){
-		float a = (hexColor >> 24 & 255) / 255.0F;
+    public static void startDrawingQuads() {
+        worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+    }
+
+    public static void tesselatorDraw() {
+        tess.draw();
+    }
+
+    public static void drawCube(Vector3fMax vector) {
+        drawTexturedCube(vector);
+    }
+
+    public static void drawCube(Vector3fMax vector, boolean doColors) {
+        if (doColors) {
+            drawColoredCube(vector);
+        } else {
+            drawCube(vector);
+        }
+    }
+
+    public static void drawColoredCube(Vector3fMax vector) {
+        //Top side
+        GL11.glColor3f(1.0F, 0.0F, 0.0F);
+        GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
+
+        //Bottom side
+        GL11.glColor3f(1.0F, 1.0F, 0.0F);
+        GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
+
+        //Draw west side:
+        GL11.glColor3f(0.0F, 1.0F, 0.0F);
+        GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
+
+        //Draw east side:
+        GL11.glColor3f(0.0F, 1.0F, 1.0F);
+        GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
+
+        //Draw north side
+        GL11.glColor3f(0.0F, 0.0F, 1.0F);
+        GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
+
+        //Draw south side
+        GL11.glColor3f(0.0F, 0.0F, 0.0F);
+        GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
+    }
+
+    public static void setARGBFromHex(int hexColor) {
+        float a = (hexColor >> 24 & 255) / 255.0F;
         float r = (hexColor >> 16 & 255) / 255.0F;
         float g = (hexColor >> 8 & 255) / 255.0F;
         float b = (hexColor & 255) / 255.0F;
-        
+
         GL11.glColor4f(r, g, b, a);
-	}
-	
-	public static void setRGBFromHex(int hexColor){
+    }
+
+    public static void setRGBFromHex(int hexColor) {
         float r = (hexColor >> 16 & 255) / 255.0F;
         float g = (hexColor >> 8 & 255) / 255.0F;
         float b = (hexColor & 255) / 255.0F;
-        
+
         GL11.glColor3f(r, g, b);
-	}
-	
-	public static void drawCubeWithoutColor(Vector3fMax vector){
-		//Top side
-		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
-		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
-		
-		//Bottom side
-		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
-		
-		//Draw west side:
-		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
-		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
-		
-		//Draw east side:
-		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
-		
-		//Draw north side
-		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin()); 
-		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
+    }
 
-		//Draw south side
-		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
-		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
-	}
+    public static void drawCubeWithoutColor(Vector3fMax vector) {
+        //Top side
+        GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
 
-	/**
-	 * Draws a cube with the size of vector. Every face has the same color This uses the Tessellator
-	 *
-	 * @author Koen Beckers (K4Unl)
-	 * @param vector
-	 */
-	/*
-	public static void drawTesselatedCube(Vector3fMax vector) {
+        //Bottom side
+        GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
 
-		Tessellator t = Tessellator.instance;
-		boolean wasTesselating = false;
+        //Draw west side:
+        GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
 
-		// Check if we were already tesselating
-		try {
-			t.startDrawingQuads();
-		} catch (IllegalStateException e) {
-			wasTesselating = true;
-		}
+        //Draw east side:
+        GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
 
-		// Top side
-		t.setColorRGBA_F(1.0F, 0.0F, 0.0F, 0.7F);
-		t.setNormal(0, 1, 0);
-		t.addVertex(vector.getXMin(), vector.getYMax(), vector.getZMax());
-		t.addVertex(vector.getXMax(), vector.getYMax(), vector.getZMax());
-		t.addVertex(vector.getXMax(), vector.getYMax(), vector.getZMin());
-		t.addVertex(vector.getXMin(), vector.getYMax(), vector.getZMin());
+        //Draw north side
+        GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
 
-		// Bottom side
-		t.setNormal(0, -1, 0);
-		t.setColorRGBA_F(1.0F, 1.0F, 0.0F, 0.7F);
-		t.addVertex(vector.getXMax(), vector.getYMin(), vector.getZMax());
-		t.addVertex(vector.getXMin(), vector.getYMin(), vector.getZMax());
-		t.addVertex(vector.getXMin(), vector.getYMin(), vector.getZMin());
-		t.addVertex(vector.getXMax(), vector.getYMin(), vector.getZMin());
+        //Draw south side
+        GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
+        GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
+    }
 
-		// Draw west side:
-		t.setNormal(-1, 0, 0);
-		t.setColorRGBA_F(0.0F, 1.0F, 0.0F, 0.7F);
-		t.addVertex(vector.getXMin(), vector.getYMin(), vector.getZMax());
-		t.addVertex(vector.getXMin(), vector.getYMax(), vector.getZMax());
-		t.addVertex(vector.getXMin(), vector.getYMax(), vector.getZMin());
-		t.addVertex(vector.getXMin(), vector.getYMin(), vector.getZMin());
+    /**
+     * Draws a cube with the size of vector. Every face has the same color This uses the Tessellator
+     *
+     * @param vector
+     * @author Koen Beckers (K4Unl)
+     */
 
-		// Draw east side:
-		t.setNormal(1, 0, 0);
-		t.setColorRGBA_F(0.0F, 1.0F, 1.0F, 0.7F);
-		t.addVertex(vector.getXMax(), vector.getYMin(), vector.getZMin());
-		t.addVertex(vector.getXMax(), vector.getYMax(), vector.getZMin());
-		t.addVertex(vector.getXMax(), vector.getYMax(), vector.getZMax());
-		t.addVertex(vector.getXMax(), vector.getYMin(), vector.getZMax());
+    public static void drawTesselatedCube(Vector3fMax vector) {
 
-		// Draw north side
-		t.setNormal(0, 0, -1);
-		t.setColorRGBA_F(0.0F, 0.0F, 1.0F, 0.7F);
-		t.addVertex(vector.getXMin(), vector.getYMin(), vector.getZMin());
-		t.addVertex(vector.getXMin(), vector.getYMax(), vector.getZMin());
-		t.addVertex(vector.getXMax(), vector.getYMax(), vector.getZMin());
-		t.addVertex(vector.getXMax(), vector.getYMin(), vector.getZMin());
+        boolean wasTesselating = false;
 
-		// Draw south side
-		t.setNormal(0, 0, 1);
-		t.setColorRGBA_F(0.0F, 0.0F, 0.0F, 0.7F);
-		t.addVertex(vector.getXMin(), vector.getYMin(), vector.getZMax());
-		t.addVertex(vector.getXMax(), vector.getYMin(), vector.getZMax());
-		t.addVertex(vector.getXMax(), vector.getYMax(), vector.getZMax());
-		t.addVertex(vector.getXMin(), vector.getYMax(), vector.getZMax());
+        // Check if we were already tesselating
+        try {
+            startDrawingQuads();
+        } catch (IllegalStateException e) {
+            wasTesselating = true;
+        }
 
-		if (!wasTesselating) {
-			t.draw();
-		}
-	}
+        // Top side
+        worldRenderer.color(1.0F, 0.0F, 0.0F, 0.7F);
+        worldRenderer.normal(0, 1, 0);
+        worldRenderer.pos(vector.getXMin(), vector.getYMax(), vector.getZMax());
+        worldRenderer.pos(vector.getXMax(), vector.getYMax(), vector.getZMax());
+        worldRenderer.pos(vector.getXMax(), vector.getYMax(), vector.getZMin());
+        worldRenderer.pos(vector.getXMin(), vector.getYMax(), vector.getZMin());
+
+        // Bottom side
+        worldRenderer.normal(0, -1, 0);
+        worldRenderer.color(1.0F, 1.0F, 0.0F, 0.7F);
+        worldRenderer.pos(vector.getXMax(), vector.getYMin(), vector.getZMax());
+        worldRenderer.pos(vector.getXMin(), vector.getYMin(), vector.getZMax());
+        worldRenderer.pos(vector.getXMin(), vector.getYMin(), vector.getZMin());
+        worldRenderer.pos(vector.getXMax(), vector.getYMin(), vector.getZMin());
+
+        // Draw west side:
+        worldRenderer.normal(-1, 0, 0);
+        worldRenderer.color(0.0F, 1.0F, 0.0F, 0.7F);
+        worldRenderer.pos(vector.getXMin(), vector.getYMin(), vector.getZMax());
+        worldRenderer.pos(vector.getXMin(), vector.getYMax(), vector.getZMax());
+        worldRenderer.pos(vector.getXMin(), vector.getYMax(), vector.getZMin());
+        worldRenderer.pos(vector.getXMin(), vector.getYMin(), vector.getZMin());
+
+        // Draw east side:
+        worldRenderer.normal(1, 0, 0);
+        worldRenderer.color(0.0F, 1.0F, 1.0F, 0.7F);
+        worldRenderer.pos(vector.getXMax(), vector.getYMin(), vector.getZMin());
+        worldRenderer.pos(vector.getXMax(), vector.getYMax(), vector.getZMin());
+        worldRenderer.pos(vector.getXMax(), vector.getYMax(), vector.getZMax());
+        worldRenderer.pos(vector.getXMax(), vector.getYMin(), vector.getZMax());
+
+        // Draw north side
+        worldRenderer.normal(0, 0, -1);
+        worldRenderer.color(0.0F, 0.0F, 1.0F, 0.7F);
+        worldRenderer.pos(vector.getXMin(), vector.getYMin(), vector.getZMin());
+        worldRenderer.pos(vector.getXMin(), vector.getYMax(), vector.getZMin());
+        worldRenderer.pos(vector.getXMax(), vector.getYMax(), vector.getZMin());
+        worldRenderer.pos(vector.getXMax(), vector.getYMin(), vector.getZMin());
+
+        // Draw south side
+        worldRenderer.normal(0, 0, 1);
+        worldRenderer.color(0.0F, 0.0F, 0.0F, 0.7F);
+        worldRenderer.pos(vector.getXMin(), vector.getYMin(), vector.getZMax());
+        worldRenderer.pos(vector.getXMax(), vector.getYMin(), vector.getZMax());
+        worldRenderer.pos(vector.getXMax(), vector.getYMax(), vector.getZMax());
+        worldRenderer.pos(vector.getXMin(), vector.getYMax(), vector.getZMax());
+
+        if (!wasTesselating) {
+            tess.draw();
+        }
+    }
 
 
-    public static boolean beginTesselatingWithTexture(){
-        Tessellator tessellator = Tessellator.instance;
+    public static boolean beginTesselatingWithTexture() {
 
         boolean wasTessellating = false;
         try {
-            tessellator.startDrawingQuads();
+            startDrawingQuads();
         } catch (IllegalStateException e) {
             wasTessellating = true;
         }
@@ -231,75 +240,68 @@ public class RenderHelper {
         return wasTessellating;
     }
 
-    public static void drawTesselatedSideTopWithTexture(Vector3fMax vector, IIcon icon){
-        Tessellator tessellator = Tessellator.instance;
+    public static void drawTesselatedSideTopWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
         //Top side
-        tessellator.setNormal(0, 1, 0);
-        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BL
-        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMaxV()); //BR
-        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TR
-        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TL
+        worldRenderer.normal(0, 1, 0);
+        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BL
+        tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMaxV()); //BR
+        tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TR
+        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TL
     }
 
-    public static void drawTesselatedSideBottomWithTexture(Vector3fMax vector, IIcon icon){
-        Tessellator tessellator = Tessellator.instance;
+    public static void drawTesselatedSideBottomWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
         //Bottom side
-        tessellator.setNormal(0, -1, 0);
-        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMaxU(), icon.getMaxV()); //BR
-        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BL
-        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TL
-        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TR
+        worldRenderer.normal(0, -1, 0);
+        tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMaxU(), icon.getMaxV()); //BR
+        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BL
+        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TL
+        tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TR
     }
 
-    public static void drawTesselatedSideWestWithTexture(Vector3fMax vector, IIcon icon){
-        Tessellator tessellator = Tessellator.instance;
+    public static void drawTesselatedSideWestWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
         //Draw west side:
-        tessellator.setNormal(-1, 0, 0);
-        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMaxU(), icon.getMaxV()); //BR
-        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMinV()); //TR
-        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TL
-        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMaxV()); //BL
+        worldRenderer.normal(-1, 0, 0);
+        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMaxU(), icon.getMaxV()); //BR
+        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMinV()); //TR
+        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TL
+        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMaxV()); //BL
     }
 
-    public static void drawTesselatedSideEastWithTexture(Vector3fMax vector, IIcon icon){
-        Tessellator tessellator = Tessellator.instance;
+    public static void drawTesselatedSideEastWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
         //Draw east side:
-        tessellator.setNormal(1, 0, 0);
-        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMaxV()); //BL
-        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TL
-        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMinV()); //TR
-        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BR
+        worldRenderer.normal(1, 0, 0);
+        tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMaxV()); //BL
+        tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TL
+        tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMinV()); //TR
+        tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BR
     }
 
-    public static void drawTesselatedSideNorthWithTexture(Vector3fMax vector, IIcon icon) {
-        Tessellator tessellator = Tessellator.instance;
+    public static void drawTesselatedSideNorthWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
         //Draw north side
-        tessellator.setNormal(0, 0, -1);
-        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMaxV()); //BL
-        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TL
-        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TR
-        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMaxV()); //BR
+        worldRenderer.normal(0, 0, -1);
+        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMaxV()); //BL
+        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TL
+        tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TR
+        tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMaxV()); //BR
     }
 
-    public static void drawTesselatedSideSouthWithTexture(Vector3fMax vector, IIcon icon){
-        Tessellator tessellator = Tessellator.instance;
+    public static void drawTesselatedSideSouthWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
         //Draw south side
-        tessellator.setNormal(0, 0, 1);
-        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMaxU(), icon.getMaxV()); //BL
-        tessellator.addVertexWithUV(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMinV()); //TL
-        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMinV()); //TR
-        tessellator.addVertexWithUV(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BR
+        worldRenderer.normal(0, 0, 1);
+        tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMaxU(), icon.getMaxV()); //BL
+        tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMinV()); //TL
+        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMinV()); //TR
+        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BR
     }
 
-    public static void stopTesselating(boolean wasTessellating){
+    public static void stopTesselating(boolean wasTessellating) {
         if (!wasTessellating) {
-            Tessellator tessellator = Tessellator.instance;
-            tessellator.draw();
+            tess.draw();
         }
     }
 
-	public static void drawTesselatedCubeWithTexture(Vector3fMax vector, IIcon icon){
-		boolean wasTessellating = beginTesselatingWithTexture();
+    public static void drawTesselatedCubeWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
+        boolean wasTessellating = beginTesselatingWithTexture();
         drawTesselatedSideTopWithTexture(vector, icon);
         drawTesselatedSideBottomWithTexture(vector, icon);
         drawTesselatedSideWestWithTexture(vector, icon);
@@ -309,51 +311,51 @@ public class RenderHelper {
 
         stopTesselating(wasTessellating);
 
-	}
+    }
 
-		
-	public static void drawTexturedCube(Vector3fMax vector){
-		//Top side:
-		RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), 0.0F, 0.0F);
-		RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), 0.5F, 0.0F);
-		RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), 0.5F, 0.5F);
-		RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), 0.0F, 0.5F);
-		
-		//Bottom side:
-		RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), 0.0F, 0.0F);
-		RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), 0.5F, 0.0F);		
-		RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), 0.5F, 0.5F);
-		RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), 0.0F, 0.5F);
 
-		//Draw west side:
-		RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), 0.5F, 0.0F);
-		RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), 0.5F, 0.5F);
-		RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), 0.0F, 0.5F);
-		RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), 0.0F, 0.0F);
-		
-		//Draw east side:
-		RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), 0.5F, 0.0F);
-		RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), 0.5F, 0.5F);
-		RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), 0.0F, 0.5F);
-		RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), 0.0F, 0.0F);
-		
-		//Draw north side
-		RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), 0.5F, 0.0F); 
-		RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), 0.5F, 0.5F);
-		RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), 0.0F, 0.5F);
-		RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), 0.0F, 0.0F);
+    public static void drawTexturedCube(Vector3fMax vector) {
+        //Top side:
+        RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), 0.0F, 0.0F);
+        RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), 0.5F, 0.0F);
+        RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), 0.5F, 0.5F);
+        RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), 0.0F, 0.5F);
 
-		//Draw south side
-		RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), 0.0F, 0.0F);
-		RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), 0.5F, 0.0F);
-		RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), 0.5F, 0.5F);
-		RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), 0.0F, 0.5F);
-	}
-	
-	public static void drawTexturedCubeWithLight(Vector3fMax vector, TileEntity t){
-		//TODO: FIX ME
-		drawTexturedCube(vector);
-		/*float light = t.blockType.getBlockBrightness(t.getWorldObj(), t.xCoord, t.yCoord, t.zCoord);
+        //Bottom side:
+        RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), 0.0F, 0.0F);
+        RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), 0.5F, 0.0F);
+        RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), 0.5F, 0.5F);
+        RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), 0.0F, 0.5F);
+
+        //Draw west side:
+        RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), 0.5F, 0.0F);
+        RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), 0.5F, 0.5F);
+        RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), 0.0F, 0.5F);
+        RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), 0.0F, 0.0F);
+
+        //Draw east side:
+        RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), 0.5F, 0.0F);
+        RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), 0.5F, 0.5F);
+        RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), 0.0F, 0.5F);
+        RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), 0.0F, 0.0F);
+
+        //Draw north side
+        RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), 0.5F, 0.0F);
+        RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), 0.5F, 0.5F);
+        RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), 0.0F, 0.5F);
+        RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), 0.0F, 0.0F);
+
+        //Draw south side
+        RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), 0.0F, 0.0F);
+        RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), 0.5F, 0.0F);
+        RenderHelper.vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), 0.5F, 0.5F);
+        RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), 0.0F, 0.5F);
+    }
+
+    public static void drawTexturedCubeWithLight(Vector3fMax vector, TileEntity t) {
+        //TODO: FIX ME
+        drawTexturedCube(vector);
+        /*float light = t.blockType.getBlockBrightness(t.getWorldObj(), t.xCoord, t.yCoord, t.zCoord);
 		light = (light + ((0.8f - light) * 0.4f)) * 0.9F;
 		//light = 1.0F;
 		
@@ -410,8 +412,8 @@ public class RenderHelper {
 		RenderHelper.vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), 0.0F, 0.5F);
 		
 		GL11.glColor3f(1.0F, 1.0F, 1.0F);
-		*//*
-	}
+		*/
+    }
 	
 	public static void draw2DCircle(float xCenter, float yCenter, float r){
 		
@@ -475,9 +477,9 @@ public class RenderHelper {
 	
 
 	
-	public static void renderSide(Vector3fMax vector, ForgeDirection dir){
+	public static void renderSide(Vector3fMax vector, EnumFacing dir){
 		//Top side
-		if(dir == ForgeDirection.UP){
+		if(dir == EnumFacing.UP){
 			GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
 			GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
 			GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
@@ -485,7 +487,7 @@ public class RenderHelper {
 		}
 		
 		//Bottom side
-		if(dir == ForgeDirection.DOWN){
+		if(dir == EnumFacing.DOWN){
 			GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
 			GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
 			GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
@@ -493,7 +495,7 @@ public class RenderHelper {
 		}
 		
 		//West side
-		if(dir == ForgeDirection.WEST){
+		if(dir == EnumFacing.WEST){
 			GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
 			GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
 			GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
@@ -501,7 +503,7 @@ public class RenderHelper {
 		}
 		
 		//East side
-		if(dir == ForgeDirection.EAST){
+		if(dir == EnumFacing.EAST){
 			GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
 			GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
 			GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
@@ -509,7 +511,7 @@ public class RenderHelper {
 		}
 		
 		//North side
-		if(dir == ForgeDirection.NORTH){
+		if(dir == EnumFacing.NORTH){
 			GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
 			GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
 			GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
@@ -517,7 +519,7 @@ public class RenderHelper {
 		}
 		
 		//South side
-		if(dir == ForgeDirection.SOUTH){
+		if(dir == EnumFacing.SOUTH){
 			GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
 			GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
 			GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
@@ -534,14 +536,14 @@ public class RenderHelper {
 		Vector3fMax vEW = new Vector3fMax(minNP, minPP, minPP, maxNP, maxPP, maxPP);
 		Vector3fMax vTB = new Vector3fMax(minPP, minNP, minPP, maxPP, maxNP, maxPP);
 		GL11.glColor3f(rF, gF, bF);
-		RenderHelper.renderSide(vNS, ForgeDirection.NORTH);
-		RenderHelper.renderSide(vNS, ForgeDirection.SOUTH);
+		RenderHelper.renderSide(vNS, EnumFacing.NORTH);
+		RenderHelper.renderSide(vNS, EnumFacing.SOUTH);
 		
-		RenderHelper.renderSide(vEW, ForgeDirection.EAST);
-		RenderHelper.renderSide(vEW, ForgeDirection.WEST);
+		RenderHelper.renderSide(vEW, EnumFacing.EAST);
+		RenderHelper.renderSide(vEW, EnumFacing.WEST);
 		
-		RenderHelper.renderSide(vTB, ForgeDirection.UP);
-		RenderHelper.renderSide(vTB, ForgeDirection.DOWN);
+		RenderHelper.renderSide(vTB, EnumFacing.UP);
+		RenderHelper.renderSide(vTB, EnumFacing.DOWN);
 		
 		if(!isActive){
 			GL11.glColor3f(1.0F, 0.0F, 0.0F);
@@ -565,34 +567,34 @@ public class RenderHelper {
 		Vector3fMax vTBN = new Vector3fMax(minPP, minNP, minNP, maxPP, maxNP, minPP);
 		Vector3fMax vTBS = new Vector3fMax(minPP, minNP, maxPP, maxPP, maxNP, maxNP);
 		
-		RenderHelper.renderSide(vEWS, ForgeDirection.EAST);
-		RenderHelper.renderSide(vEWS, ForgeDirection.WEST);
-		RenderHelper.renderSide(vEWN, ForgeDirection.EAST);
-		RenderHelper.renderSide(vEWN, ForgeDirection.WEST);
-		RenderHelper.renderSide(vEWT, ForgeDirection.EAST);
-		RenderHelper.renderSide(vEWT, ForgeDirection.WEST);
-		RenderHelper.renderSide(vEWB, ForgeDirection.EAST);
-		RenderHelper.renderSide(vEWB, ForgeDirection.WEST);
+		RenderHelper.renderSide(vEWS, EnumFacing.EAST);
+		RenderHelper.renderSide(vEWS, EnumFacing.WEST);
+		RenderHelper.renderSide(vEWN, EnumFacing.EAST);
+		RenderHelper.renderSide(vEWN, EnumFacing.WEST);
+		RenderHelper.renderSide(vEWT, EnumFacing.EAST);
+		RenderHelper.renderSide(vEWT, EnumFacing.WEST);
+		RenderHelper.renderSide(vEWB, EnumFacing.EAST);
+		RenderHelper.renderSide(vEWB, EnumFacing.WEST);
 		
 		
-		RenderHelper.renderSide(vNSW, ForgeDirection.NORTH);
-		RenderHelper.renderSide(vNSW, ForgeDirection.SOUTH);
-		RenderHelper.renderSide(vNSE, ForgeDirection.NORTH);
-		RenderHelper.renderSide(vNSE, ForgeDirection.SOUTH);
+		RenderHelper.renderSide(vNSW, EnumFacing.NORTH);
+		RenderHelper.renderSide(vNSW, EnumFacing.SOUTH);
+		RenderHelper.renderSide(vNSE, EnumFacing.NORTH);
+		RenderHelper.renderSide(vNSE, EnumFacing.SOUTH);
 		
-		RenderHelper.renderSide(vNST, ForgeDirection.NORTH);
-		RenderHelper.renderSide(vNST, ForgeDirection.SOUTH);
-		RenderHelper.renderSide(vNSB, ForgeDirection.NORTH);
-		RenderHelper.renderSide(vNSB, ForgeDirection.SOUTH);
+		RenderHelper.renderSide(vNST, EnumFacing.NORTH);
+		RenderHelper.renderSide(vNST, EnumFacing.SOUTH);
+		RenderHelper.renderSide(vNSB, EnumFacing.NORTH);
+		RenderHelper.renderSide(vNSB, EnumFacing.SOUTH);
 		
-		RenderHelper.renderSide(vTBW, ForgeDirection.UP);
-		RenderHelper.renderSide(vTBW, ForgeDirection.DOWN);
-		RenderHelper.renderSide(vTBE, ForgeDirection.UP);
-		RenderHelper.renderSide(vTBE, ForgeDirection.DOWN);
-		RenderHelper.renderSide(vTBN, ForgeDirection.UP);
-		RenderHelper.renderSide(vTBN, ForgeDirection.DOWN);
-		RenderHelper.renderSide(vTBS, ForgeDirection.UP);
-		RenderHelper.renderSide(vTBS, ForgeDirection.DOWN);
+		RenderHelper.renderSide(vTBW, EnumFacing.UP);
+		RenderHelper.renderSide(vTBW, EnumFacing.DOWN);
+		RenderHelper.renderSide(vTBE, EnumFacing.UP);
+		RenderHelper.renderSide(vTBE, EnumFacing.DOWN);
+		RenderHelper.renderSide(vTBN, EnumFacing.UP);
+		RenderHelper.renderSide(vTBN, EnumFacing.DOWN);
+		RenderHelper.renderSide(vTBS, EnumFacing.UP);
+		RenderHelper.renderSide(vTBS, EnumFacing.DOWN);
 	}
 	
 	public static void drawWhiteCube(Vector3fMax vector){
@@ -632,5 +634,5 @@ public class RenderHelper {
 		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
 		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
 	}
-	*/
+
 }
