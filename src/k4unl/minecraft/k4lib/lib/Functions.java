@@ -1,12 +1,15 @@
 package k4unl.minecraft.k4lib.lib;
 
 import com.mojang.authlib.GameProfile;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.Fluid;
 
 import java.util.List;
 
@@ -123,6 +126,10 @@ public class Functions {
             i++;
         }
         return i - 1;
+    }
+
+    public static TextureAtlasSprite getFluidIcon(Fluid fluid) {
+        return Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(fluid.getFlowing().toString());
     }
 
 }

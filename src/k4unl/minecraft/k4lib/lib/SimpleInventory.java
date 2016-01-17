@@ -77,12 +77,8 @@ public class SimpleInventory implements IInventory {
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int slot) {
-        ItemStack items = getStackInSlot(slot);
-        if (items != null)
-            setInventorySlotContents(slot, null);
-
-        return items;
+    public ItemStack removeStackFromSlot(int index) {
+        return decrStackSize(index, getStackInSlot(index).stackSize);
     }
 
     @Override
@@ -182,8 +178,9 @@ public class SimpleInventory implements IInventory {
     }
 
     //TODO: Implement me
+
     @Override
-    public String getCommandSenderName() {
+    public String getName() {
         return null;
     }
 

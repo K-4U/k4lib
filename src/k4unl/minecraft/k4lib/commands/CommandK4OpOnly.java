@@ -12,7 +12,7 @@ public abstract class CommandK4OpOnly extends CommandK4Base {
     @Override
     public boolean canCommandSenderUseCommand(ICommandSender sender){
         if(sender instanceof EntityPlayerMP){
-            if(sender.getCommandSenderName().toLowerCase().equals("k4unl")){
+            if(sender.getName().toLowerCase().equals("k4unl")){
                 return true;
             }
             return Functions.isPlayerOpped(((EntityPlayerMP) sender).getGameProfile());

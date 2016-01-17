@@ -22,16 +22,17 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 public abstract class LocationIntPacket<REQ extends IMessage> extends AbstractPacket<REQ> {
     
     protected int x, y, z;
-    
+    protected BlockPos pos;
+
     public LocationIntPacket() {
     
     }
     
-    public LocationIntPacket(int x, int y, int z) {
-    
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    public LocationIntPacket(BlockPos pos) {
+        this.x = pos.getX();
+        this.y = pos.getY();
+        this.z = pos.getZ();
+        this.pos = pos;
     }
     
     @Override
@@ -48,6 +49,7 @@ public abstract class LocationIntPacket<REQ extends IMessage> extends AbstractPa
         x = buf.readInt();
         y = buf.readInt();
         z = buf.readInt();
+        this.pos = new BlockPos(x, y, z);
     }
     
     public NetworkRegistry.TargetPoint getTargetPoint(World world) {
@@ -62,6 +64,6 @@ public abstract class LocationIntPacket<REQ extends IMessage> extends AbstractPa
     
     protected Block getBlock(World world) {
     
-        return world.getBlockState(new BlockPos(x, y, z)).getBlock();
+        return world.getBlockState(pos).getBlock();
     }
 }
