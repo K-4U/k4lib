@@ -17,7 +17,7 @@ apply plugin: 'maven-publish'
 
 project.ext {
     buildNum = System.getenv("BUILD_NUMBER")
-    mcVersion="1.8.8"
+    mcVersion="1.8.9"
 }
 
 version = project.ext.mcVersion + "-1.0." + project.ext.buildNum
@@ -26,11 +26,11 @@ archivesBaseName = "k4lib"
 
 
 minecraft {
-    version = "${project.ext.mcVersion}-11.15.0.1641-${project.ext.mcVersion}"
+    version = "${project.ext.mcVersion}-11.15.0.1705"
     replace "@VERSION@", project.version
     replace "@BUILDNUM@", project.ext.buildNum
 
-    mappings = "snapshot_20151122"
+    mappings = "snapshot_20160117"
 
     runDir = "../Minecraft/"
 }
