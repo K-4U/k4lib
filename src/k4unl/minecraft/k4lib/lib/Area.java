@@ -1,6 +1,7 @@
 package k4unl.minecraft.k4lib.lib;
 
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 
 public class Area {
 
@@ -74,6 +75,10 @@ public class Area {
             }
         }
         return false;
+    }
+
+    public boolean contains(BlockPos pos) {
+        return contains(pos.getX(), pos.getY(), pos.getZ());
     }
 
     public int getMinX(){
