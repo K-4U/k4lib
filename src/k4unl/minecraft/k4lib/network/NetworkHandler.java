@@ -26,77 +26,68 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 /**
- * 
  * @author MineMaarten.
- * Modified by Koen Beckers (K4Unl) for K4Lib
+ *         Modified by Koen Beckers (K4Unl) for K4Lib
+ *         Hey, I fixed the static .. abstract...! @CallMeFoxie :D
  */
 
-public class NetworkHandler {
+public abstract class NetworkHandler {
 
-    public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(getModId());
-    protected static int discriminant;
+   public final NetworkHandler       INSTANCE;
+   protected    int                  discriminant;
+   private      SimpleNetworkWrapper channel;
 
-    /**
-     * OVERRIDE THIS METHOD
-     * @return
-     */
-    public static String getModId() {
+   public NetworkHandler() {
+      channel = NetworkRegistry.INSTANCE.newSimpleChannel(getModId());
+      INSTANCE = this;
+   }
 
-        return "";
-    }
+   public abstract String getModId();
 
-    /*
-     * The integer is the ID of the message, the Side is the side this message will be handled (received) on!
-     */
-    public static void init() {
-
-    }
+   /*
+    * The integer is the ID of the message, the Side is the side this message will be handled (received) on!
+    * Empty init would make no sense as there has to be at least one message added.
+    */
+   public abstract void init();
 
     /*
-     * public static void INSTANCE.registerMessage(Class<? extends AbstractPacket<? extends IMessage>> clazz){ INSTANCE.registerMessage(clazz, clazz,
+     * public static void registerMessage(){ INSTANCE.registerMessage(clazz, clazz,
      * discriminant++, Side.SERVER, discriminant++, Side.SERVER); }
      */
 
-    public static void sendToAll(IMessage message) {
+   public SimpleNetworkWrapper getChannel() {
+      return channel;
+   }
 
-        INSTANCE.sendToAll(message);
-    }
+   public void sendToAll(IMessage message) {
+      channel.sendToAll(message);
+   }
 
-    public static void sendTo(IMessage message, EntityPlayerMP player) {
+   public void sendTo(IMessage message, EntityPlayerMP player) {
+      channel.sendTo(message, player);
+   }
 
-        INSTANCE.sendTo(message, player);
-    }
+   public void sendToAllAround(LocationIntPacket message, World world, double distance) {
+      sendToAllAround(message, message.getTargetPoint(world, distance));
+   }
 
-    @SuppressWarnings("rawtypes")
-    public static void sendToAllAround(LocationIntPacket message, World world, double distance) {
+   public void sendToAllAround(LocationIntPacket message, World world) {
+      sendToAllAround(message, message.getTargetPoint(world));
+   }
 
-        sendToAllAround(message, message.getTargetPoint(world, distance));
-    }
+   public void sendToAllAround(LocationDoublePacket message, World world) {
+      sendToAllAround(message, message.getTargetPoint(world));
+   }
 
-    @SuppressWarnings("rawtypes")
-    public static void sendToAllAround(LocationIntPacket message, World world) {
+   public void sendToAllAround(IMessage message, NetworkRegistry.TargetPoint point) {
+      channel.sendToAllAround(message, point);
+   }
 
-        sendToAllAround(message, message.getTargetPoint(world));
-    }
+   public void sendToDimension(IMessage message, int dimensionId) {
+      channel.sendToDimension(message, dimensionId);
+   }
 
-    @SuppressWarnings("rawtypes")
-    public static void sendToAllAround(LocationDoublePacket message, World world) {
-
-        sendToAllAround(message, message.getTargetPoint(world));
-    }
-
-    public static void sendToAllAround(IMessage message, NetworkRegistry.TargetPoint point) {
-
-        INSTANCE.sendToAllAround(message, point);
-    }
-
-    public static void sendToDimension(IMessage message, int dimensionId) {
-
-        INSTANCE.sendToDimension(message, dimensionId);
-    }
-
-    public static void sendToServer(IMessage message) {
-
-        INSTANCE.sendToServer(message);
-    }
+   public void sendToServer(IMessage message) {
+      channel.sendToServer(message);
+   }
 }
