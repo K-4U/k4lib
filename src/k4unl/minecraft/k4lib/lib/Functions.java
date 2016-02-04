@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 
@@ -62,12 +63,10 @@ public class Functions {
     }
 
     public static MovingObjectPosition getEntityLookedObject(EntityLivingBase entity, float maxDistance){
-        /*Vec3 entityVec = Vec3.createVectorHelper(entity.posX, entity.posY + entity.getEyeHeight() - entity.yOffset - (entity.isSneaking() ? 0.08 : 0), entity.posZ);
+        Vec3 entityVec = new Vec3(entity.posX, entity.posY + entity.getEyeHeight() - entity.getYOffset() - (entity.isSneaking() ? 0.08 : 0), entity.posZ);
         Vec3 entityLookVec = entity.getLook(1.0F);
         Vec3 maxDistVec = entityVec.addVector(entityLookVec.xCoord * maxDistance, entityLookVec.yCoord * maxDistance, entityLookVec.zCoord * maxDistance);
-        return entity.worldObj.rayTraceBlocks(entityVec, maxDistVec);*/
-        //TODO: FIX ME
-        return null;
+        return entity.worldObj.rayTraceBlocks(entityVec, maxDistVec);
     }
 
     public static Location getEntityLookedBlock(EntityLivingBase entity, float maxDistance){
