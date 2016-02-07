@@ -1,12 +1,14 @@
 package k4unl.minecraft.k4lib.lib;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -262,5 +264,9 @@ public class Location {
 
     public boolean compare(BlockPos pos) {
         return compare(pos.getX(), pos.getY(), pos.getZ());
+    }
+
+    public IBlockState getBlockState(World worldObj) {
+        return worldObj.getBlockState(this.toBlockPos());
     }
 }

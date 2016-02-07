@@ -261,10 +261,10 @@ public class RenderHelper {
     public static void drawTesselatedSideWestWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
         //Draw west side:
         worldRenderer.normal(-1, 0, 0);
-        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMaxU(), icon.getMaxV()); //BR
-        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMinV()); //TR
-        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TL
-        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMaxV()); //BL
+        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMaxU(), icon.getMinV()); //BR
+        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMaxV()); //TR
+        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMaxV()); //TL
+        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //BL
     }
 
     public static void drawTesselatedSideEastWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
@@ -279,10 +279,10 @@ public class RenderHelper {
     public static void drawTesselatedSideNorthWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
         //Draw north side
         worldRenderer.normal(0, 0, -1);
-        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMaxV()); //BL
-        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TL
-        tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TR
-        tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMaxV()); //BR
+        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //BL
+        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMaxV()); //TL
+        tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMaxV()); //TR
+        tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //BR
     }
 
     public static void drawTesselatedSideSouthWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
