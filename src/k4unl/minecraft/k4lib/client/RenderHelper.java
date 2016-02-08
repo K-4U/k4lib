@@ -635,4 +635,52 @@ public class RenderHelper {
 		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
 	}
 
+    public static void drawGL11SideTopWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
+        //Top side
+        vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BL
+        vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMaxV()); //BR
+        vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TR
+        vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TL
+    }
+
+    public static void drawGL11SideBottomWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
+        //Bottom side
+        vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMaxU(), icon.getMaxV()); //BR
+        vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BL
+        vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TL
+        vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TR
+    }
+
+    public static void drawGL11SideWestWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
+        //Draw west side:
+        vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMaxU(), icon.getMaxV()); //BR
+        vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMinV()); //TR
+        vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TL
+        vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMaxV()); //BL
+    }
+
+    public static void drawGL11SideEastWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
+        //Draw east side:
+        vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMaxV()); //BL
+        vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TL
+        vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMinV()); //TR
+        vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BR
+    }
+
+    public static void drawGL11SideNorthWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
+        //Draw north side
+        vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMaxV()); //BL
+        vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TL
+        vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TR
+        vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMaxV()); //BR
+    }
+
+    public static void drawGL11SideSouthWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
+        //Draw south side
+        vertexWithTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMaxU(), icon.getMaxV()); //BL
+        vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMinV()); //TL
+        vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMinV()); //TR
+        vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BR
+    }
+
 }
