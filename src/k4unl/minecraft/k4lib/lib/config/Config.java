@@ -8,12 +8,14 @@ import java.util.List;
 public class Config {
     public static Config INSTANCE = new Config();
     public List<ConfigOption> configOptions = new ArrayList<ConfigOption>();
+    private Configuration configuration;
 
     public void loadConfigOptions(Configuration c) {
 
         for (ConfigOption config : this.configOptions) {
             config.loadFromConfig(c);
         }
+        configuration = c;
     }
 
     public boolean getBool(String key){
@@ -196,6 +198,19 @@ public class Config {
         }
     }
 
+    public List<String> getAllCategories(){
+        List<String> categories = new ArrayList<>();
+        for(ConfigOption config : this.configOptions){
+            if(!categories.contains(config.getCategory())){
+                categories.add(config.getCategory());
+            }
+        }
+        return categories;
+    }
+
+    public Configuration getConfiguration(){
+        return configuration;
+    }
 
     public void init(){
         configOptions.add(new ConfigOption("debug", false));
