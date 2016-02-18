@@ -189,6 +189,10 @@ public class Location {
         return (int) Math.sqrt(Math.pow(this.x - otherLoc.x, 2) + Math.pow(this.y - otherLoc.y, 2) + Math.pow(this.z - otherLoc.z, 2));
     }
 
+    public int getDifference(BlockPos otherLoc) {
+        return (int) Math.sqrt(Math.pow(this.x - otherLoc.getX(), 2) + Math.pow(this.y - otherLoc.getY(), 2) + Math.pow(this.z - otherLoc.getZ(), 2));
+    }
+
     public String printLocation() {
         return "X: " + this.x + " Y: " + this.y + " Z: " + this.z;
     }
