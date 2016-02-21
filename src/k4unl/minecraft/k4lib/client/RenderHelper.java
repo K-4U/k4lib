@@ -36,6 +36,12 @@ public class RenderHelper {
         worldRenderer.pos(x, y, z).tex(tL, tT).endVertex();
     }
 
+    public static void tesselatedTexture(float x, float y, float z, float tL, float tT, int brightness) {
+        int j = brightness >> 16 & 65535;
+        int k = brightness & 65535;
+        worldRenderer.pos(x, y, z).tex(tL, tT).lightmap(j, k).endVertex();
+    }
+
     public static void startDrawingQuads() {
         worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
     }
@@ -54,6 +60,12 @@ public class RenderHelper {
         } else {
             drawCube(vector);
         }
+    }
+
+    public static void setBrightness(int brightness){
+        int j = brightness >> 16 & 65535;
+        int k = brightness & 65535;
+        worldRenderer.lightmap(j, k);
     }
 
     public static void drawColoredCube(Vector3fMax vector) {
@@ -248,6 +260,14 @@ public class RenderHelper {
         tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TR
         tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TL
     }
+    public static void drawTesselatedSideTopWithTexture(Vector3fMax vector, TextureAtlasSprite icon, int brightness) {
+        //Top side
+        worldRenderer.normal(0, 1, 0);
+        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMaxV(), brightness); //BL
+        tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMaxV(), brightness); //BR
+        tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMinV(), brightness); //TR
+        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMinV(), brightness); //TL
+    }
 
     public static void drawTesselatedSideBottomWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
         //Bottom side
@@ -256,6 +276,14 @@ public class RenderHelper {
         tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BL
         tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //TL
         tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TR
+    }
+    public static void drawTesselatedSideBottomWithTexture(Vector3fMax vector, TextureAtlasSprite icon, int brightness) {
+        //Bottom side
+        worldRenderer.normal(0, -1, 0);
+        tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMaxU(), icon.getMaxV(), brightness); //BR
+        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV(), brightness); //BL
+        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMinV(), brightness); //TL
+        tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMinV(), brightness); //TR
     }
 
     public static void drawTesselatedSideWestWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
@@ -266,6 +294,14 @@ public class RenderHelper {
         tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMaxV()); //TL
         tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //BL
     }
+    public static void drawTesselatedSideWestWithTexture(Vector3fMax vector, TextureAtlasSprite icon, int brightness) {
+        //Draw west side:
+        worldRenderer.normal(-1, 0, 0);
+        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMaxU(), icon.getMinV(), brightness); //BR
+        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMaxV(), brightness); //TR
+        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMaxV(), brightness); //TL
+        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMinV(), brightness); //BL
+    }
 
     public static void drawTesselatedSideEastWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
         //Draw east side:
@@ -274,6 +310,14 @@ public class RenderHelper {
         tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMinV()); //TL
         tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMinV()); //TR
         tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BR
+    }
+    public static void drawTesselatedSideEastWithTexture(Vector3fMax vector, TextureAtlasSprite icon, int brightness) {
+        //Draw east side:
+        worldRenderer.normal(1, 0, 0);
+        tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMaxV(), brightness); //BL
+        tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMinV(), brightness); //TL
+        tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMinV(), brightness); //TR
+        tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV(), brightness); //BR
     }
 
     public static void drawTesselatedSideNorthWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
@@ -284,6 +328,14 @@ public class RenderHelper {
         tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMaxV()); //TR
         tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMinV()); //BR
     }
+    public static void drawTesselatedSideNorthWithTexture(Vector3fMax vector, TextureAtlasSprite icon, int brightness) {
+        //Draw north side
+        worldRenderer.normal(0, 0, -1);
+        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMin(), icon.getMaxU(), icon.getMinV(), brightness); //BL
+        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMin(), icon.getMaxU(), icon.getMaxV(), brightness); //TL
+        tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMin(), icon.getMinU(), icon.getMaxV(), brightness); //TR
+        tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMin(), icon.getMinU(), icon.getMinV(), brightness); //BR
+    }
 
     public static void drawTesselatedSideSouthWithTexture(Vector3fMax vector, TextureAtlasSprite icon) {
         //Draw south side
@@ -292,6 +344,14 @@ public class RenderHelper {
         tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMinV()); //TL
         tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMinV()); //TR
         tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BR
+    }
+    public static void drawTesselatedSideSouthWithTexture(Vector3fMax vector, TextureAtlasSprite icon, int brightness) {
+        //Draw south side
+        worldRenderer.normal(0, 0, 1);
+        tesselatedTexture(vector.getXMax(), vector.getYMin(), vector.getZMax(), icon.getMaxU(), icon.getMaxV(), brightness); //BL
+        tesselatedTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMinV(), brightness); //TL
+        tesselatedTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMinV(), brightness); //TR
+        tesselatedTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV(), brightness); //BR
     }
 
     public static void stopTesselating(boolean wasTessellating) {
@@ -308,6 +368,19 @@ public class RenderHelper {
         drawTesselatedSideEastWithTexture(vector, icon);
         drawTesselatedSideNorthWithTexture(vector, icon);
         drawTesselatedSideSouthWithTexture(vector, icon);
+
+        stopTesselating(wasTessellating);
+
+    }
+
+    public static void drawTesselatedCubeWithTexture(Vector3fMax vector, TextureAtlasSprite icon, int brightness) {
+        boolean wasTessellating = beginTesselatingWithTexture();
+        drawTesselatedSideTopWithTexture(vector, icon, brightness);
+        drawTesselatedSideBottomWithTexture(vector, icon, brightness);
+        drawTesselatedSideWestWithTexture(vector, icon, brightness);
+        drawTesselatedSideEastWithTexture(vector, icon, brightness);
+        drawTesselatedSideNorthWithTexture(vector, icon, brightness);
+        drawTesselatedSideSouthWithTexture(vector, icon, brightness);
 
         stopTesselating(wasTessellating);
 
