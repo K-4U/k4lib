@@ -4,9 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -118,7 +118,7 @@ public class Location {
         this(pos, offset, 1);
     }
 
-    public Location(MovingObjectPosition blockLookedAt) {
+    public Location(RayTraceResult blockLookedAt) {
         if (blockLookedAt != null) {
             this.x = blockLookedAt.getBlockPos().getX();
             this.y = blockLookedAt.getBlockPos().getY();

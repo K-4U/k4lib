@@ -1,7 +1,7 @@
 package k4unl.minecraft.k4lib.lib;
 
 
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.math.AxisAlignedBB;
 
 public class Vector3fMax {
     private float xMin;

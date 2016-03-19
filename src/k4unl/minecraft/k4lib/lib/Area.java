@@ -1,7 +1,7 @@
 package k4unl.minecraft.k4lib.lib;
 
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 
 public class Area {
 
@@ -106,6 +106,6 @@ public class Area {
     }
 
     public AxisAlignedBB getAABB(){
-        return AxisAlignedBB.fromBounds(getMinX(), getMinY(), getMinZ(), getMaxX(), getMaxY(), getMaxZ());
+        return new AxisAlignedBB(getMinX(), getMinY(), getMinZ(), getMaxX(), getMaxY(), getMaxZ());
     }
 }

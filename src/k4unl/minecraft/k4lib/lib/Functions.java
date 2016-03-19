@@ -5,12 +5,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fml.server.FMLServerHandler;
 
 import java.util.List;
 
@@ -33,8 +33,8 @@ public class Functions {
     }
 
     public static boolean isPlayerOpped(GameProfile player){
-        if(MinecraftServer.getServer().getConfigurationManager().getOppedPlayers().getKeys().length > 0) {
-            for (String name : MinecraftServer.getServer().getConfigurationManager().getOppedPlayerNames()) {
+        if(FMLServerHandler.instance().getServer().getPlayerList().getOppedPlayers().getKeys().length > 0) {
+            for (String name : FMLServerHandler.instance().getServer().getPlayerList().getOppedPlayerNames()) {
                 if (name.toLowerCase().equals(player.getName().toLowerCase())) {
                     return true;
                 }
@@ -45,8 +45,8 @@ public class Functions {
     }
 
     public static boolean isPlayerOpped(String player){
-        if(MinecraftServer.getServer().getConfigurationManager().getOppedPlayers().getKeys().length > 0) {
-            for (String name : MinecraftServer.getServer().getConfigurationManager().getOppedPlayerNames()) {
+        if(FMLServerHandler.instance().getServer().getPlayerList().getOppedPlayers().getKeys().length > 0) {
+            for (String name : FMLServerHandler.instance().getServer().getPlayerList().getOppedPlayerNames()) {
                 if (name.toLowerCase().equals(player.toLowerCase())) {
                     return true;
                 }
@@ -56,22 +56,22 @@ public class Functions {
         return true;
     }
 
-    public static void sendChatMessageServerWide(World world, ChatComponentText message){
+    public static void sendChatMessageServerWide(World world, TextComponentString message){
         for (EntityPlayer player : (List<EntityPlayer>) world.playerEntities) {
             player.addChatMessage(message);
         }
     }
 
-    public static MovingObjectPosition getEntityLookedObject(EntityLivingBase entity, float maxDistance){
-        Vec3 entityVec = new Vec3(entity.posX, entity.posY + entity.getEyeHeight() - entity.getYOffset() - (entity.isSneaking() ? 0.08 : 0), entity.posZ);
-        Vec3 entityLookVec = entity.getLook(1.0F);
-        Vec3 maxDistVec = entityVec.addVector(entityLookVec.xCoord * maxDistance, entityLookVec.yCoord * maxDistance, entityLookVec.zCoord * maxDistance);
+    public static RayTraceResult getEntityLookedObject(EntityLivingBase entity, float maxDistance){
+        Vec3d entityVec = new Vec3d(entity.posX, entity.posY + entity.getEyeHeight() - entity.getYOffset() - (entity.isSneaking() ? 0.08 : 0), entity.posZ);
+        Vec3d entityLookVec = entity.getLook(1.0F);
+        Vec3d maxDistVec = entityVec.addVector(entityLookVec.xCoord * maxDistance, entityLookVec.yCoord * maxDistance, entityLookVec.zCoord * maxDistance);
         return entity.worldObj.rayTraceBlocks(entityVec, maxDistVec);
     }
 
     public static Location getEntityLookedBlock(EntityLivingBase entity, float maxDistance){
-        MovingObjectPosition hit = getEntityLookedObject(entity, maxDistance);
-        if(hit == null || hit.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) {
+        RayTraceResult hit = getEntityLookedObject(entity, maxDistance);
+        if(hit == null || hit.typeOfHit != RayTraceResult.Type.BLOCK) {
             return null;
         }
         return new Location(hit.getBlockPos().getX(), hit.getBlockPos().getY(), hit.getBlockPos().getZ());

@@ -22,13 +22,4 @@ public abstract class CommandK4Base extends CommandBase {
 
     @Override
     public abstract String getCommandUsage(ICommandSender p_71518_1_);
-
-    @Override
-    public abstract void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_);
-
-    @Override
-    public boolean canCommandSenderUseCommand(ICommandSender par1iCommandSender) {
-
-        return true;
-    }
 }
