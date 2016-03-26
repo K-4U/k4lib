@@ -31,11 +31,11 @@ allprojects {
 }
 
 minecraft {
-    version = "${project.ext.mcVersion}-12.16.0.1770-1.9"
+    version = "${project.ext.mcVersion}-12.16.0.1811-1.9"
     replace "@VERSION@", project.version
     replace "@BUILDNUM@", project.ext.buildNum
     
-    mappings = "snapshot_20160318"
+    mappings = "snapshot_20160326"
 
     runDir = "../Minecraft/"
 }

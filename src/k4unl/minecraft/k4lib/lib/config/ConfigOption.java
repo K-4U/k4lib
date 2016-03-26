@@ -152,27 +152,27 @@ public class ConfigOption {
         if (isBool) {
             config.get(category, key, def).set(val);
             if (!comment.equals("")) {
-                config.get(category, key, def).comment = comment;
+                config.get(category, key, def).setComment(comment);
             }
         } else if (isInt) {
             config.get(category, key, defInt).set(valInt);
             if (!comment.equals("")) {
-                config.get(category, key, defInt).comment = comment;
+                config.get(category, key, defInt).setComment(comment);
             }
         } else if (isString) {
             config.get(category, key, defString).set(valString);
             if (!comment.equals("")) {
-                config.get(category, key, defString).comment = comment;
+                config.get(category, key, defString).setComment(comment);
             }
         } else if (isChar) {
             config.get(category, key, defChar + "").set(valChar + "");
             if (!comment.equals("")) {
-                config.get(category, key, defChar + "").comment = comment;
+                config.get(category, key, defChar + "").setComment(comment);
             }
         } else if (isDouble) {
             config.get(category, key, defDouble).set(valDouble);
             if (!comment.equals("")) {
-                config.get(category, key, defDouble).comment = comment;
+                config.get(category, key, defDouble).setComment(comment);
             }
         }
         config.save();
@@ -183,22 +183,22 @@ public class ConfigOption {
         if (isBool) {
             val = config.get(category, key, def).getBoolean(def);
             if (!comment.equals("")) {
-                config.get(category, key, def).comment = comment;
+                config.get(category, key, def).setComment(comment);
             }
         } else if (isInt) {
             valInt = config.get(category, key, defInt).getInt(defInt);
             if (!comment.equals("")) {
-                config.get(category, key, defInt).comment = comment;
+                config.get(category, key, defInt).setComment(comment);
             }
         } else if (isString) {
             valString = config.get(category, key, defString).getString();
             if (!comment.equals("")) {
-                config.get(category, key, defString).comment = comment;
+                config.get(category, key, defString).setComment(comment);
             }
         } else if (isChar) {
             String t = config.get(category, key, defChar + "").getString();
             if (!comment.equals("")) {
-                config.get(category, key, defChar + "").comment = comment;
+                config.get(category, key, defChar + "").setComment(comment);
             }
             if (t.length() > 0) {
                 valChar = t.charAt(0);
@@ -206,7 +206,7 @@ public class ConfigOption {
         } else if (isDouble) {
             valDouble = config.get(category, key, defDouble).getDouble();
             if (!comment.equals("")) {
-                config.get(category, key, defDouble).comment = comment;
+                config.get(category, key, defDouble).setComment(comment);
             }
         }
     }
