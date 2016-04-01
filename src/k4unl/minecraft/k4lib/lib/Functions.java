@@ -57,19 +57,6 @@ public class Functions {
         return true;
     }
 
-    public static boolean isPlayerOpped(String player) {
-
-        if (FMLServerHandler.instance().getServer().getPlayerList().getOppedPlayers().getKeys().length > 0) {
-            for (String name : FMLServerHandler.instance().getServer().getPlayerList().getOppedPlayerNames()) {
-                if (name.toLowerCase().equals(player.toLowerCase())) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        return true;
-    }
-
     public static void sendChatMessageServerWide(TextComponentString message) {
 
         for (EntityPlayer player : getServer().getPlayerList().getPlayerList()) {
@@ -158,7 +145,7 @@ public class Functions {
 
 
     public static void displayTitleMessage(SPacketTitle.Type titleType, EntityPlayerMP entityPlayerMP, ITextComponent toShow){
-        
+
         SPacketTitle spackettitle = new SPacketTitle(titleType, toShow);
         entityPlayerMP.playerNetServerHandler.sendPacket(spackettitle);
     }
