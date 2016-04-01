@@ -10,6 +10,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.server.FMLServerHandler;
 
 import java.util.List;
@@ -37,11 +38,7 @@ public class Functions {
 
     public static MinecraftServer getServer() {
 
-        if (FMLServerHandler.instance().getServer() != null) {
-            return FMLServerHandler.instance().getServer();
-        } else {
-            return Minecraft.getMinecraft().getIntegratedServer();
-        }
+        return FMLCommonHandler.instance().getMinecraftServerInstance();
     }
 
     public static boolean isPlayerOpped(GameProfile player) {
