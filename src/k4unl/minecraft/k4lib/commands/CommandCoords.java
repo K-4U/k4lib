@@ -26,4 +26,10 @@ public class CommandCoords extends CommandK4Base {
         String senderCoords = sender.getName() + " is at [" + sender.getPosition().getX() + ", " + sender.getPosition().getY() + ", " + sender.getPosition().getZ() + "]";
         Functions.sendChatMessageServerWide(new TextComponentString(senderCoords));
     }
+
+    @Override
+    public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
+
+        return true;
+    }
 }

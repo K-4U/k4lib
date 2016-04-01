@@ -5,9 +5,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.play.server.SPacketTitle;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -151,6 +154,13 @@ public class Functions {
     public static TextureAtlasSprite getFluidIcon(Fluid fluid) {
 
         return Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(fluid.getFlowing().toString());
+    }
+
+
+    public static void displayTitleMessage(SPacketTitle.Type titleType, EntityPlayerMP entityPlayerMP, ITextComponent toShow){
+        
+        SPacketTitle spackettitle = new SPacketTitle(titleType, toShow);
+        entityPlayerMP.playerNetServerHandler.sendPacket(spackettitle);
     }
 
 }
