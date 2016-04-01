@@ -10,7 +10,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fml.server.FMLServerHandler;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.util.List;
 
@@ -33,8 +33,8 @@ public class Functions {
     }
 
     public static boolean isPlayerOpped(GameProfile player){
-        if(FMLServerHandler.instance().getServer().getPlayerList().getOppedPlayers().getKeys().length > 0) {
-            for (String name : FMLServerHandler.instance().getServer().getPlayerList().getOppedPlayerNames()) {
+        if(FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getOppedPlayers().getKeys().length > 0) {
+            for (String name : FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getOppedPlayerNames()) {
                 if (name.toLowerCase().equals(player.getName().toLowerCase())) {
                     return true;
                 }
@@ -45,8 +45,8 @@ public class Functions {
     }
 
     public static boolean isPlayerOpped(String player){
-        if(FMLServerHandler.instance().getServer().getPlayerList().getOppedPlayers().getKeys().length > 0) {
-            for (String name : FMLServerHandler.instance().getServer().getPlayerList().getOppedPlayerNames()) {
+        if(FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getOppedPlayers().getKeys().length > 0) {
+            for (String name : FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getOppedPlayerNames()) {
                 if (name.toLowerCase().equals(player.toLowerCase())) {
                     return true;
                 }
