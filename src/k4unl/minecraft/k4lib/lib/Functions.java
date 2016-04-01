@@ -14,7 +14,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.server.FMLServerHandler;
 
 import java.util.List;
 
@@ -47,7 +46,7 @@ public class Functions {
     public static boolean isPlayerOpped(GameProfile player) {
 
         if (getServer().getPlayerList().getOppedPlayerNames().length > 0) {
-            for (String name : FMLServerHandler.instance().getServer().getPlayerList().getOppedPlayerNames()) {
+            for (String name : getServer().getPlayerList().getOppedPlayerNames()) {
                 if (name.toLowerCase().equals(player.getName().toLowerCase())) {
                     return true;
                 }
@@ -144,7 +143,7 @@ public class Functions {
     }
 
 
-    public static void displayTitleMessage(SPacketTitle.Type titleType, EntityPlayerMP entityPlayerMP, ITextComponent toShow){
+    public static void displayTitleMessage(SPacketTitle.Type titleType, EntityPlayerMP entityPlayerMP, ITextComponent toShow) {
 
         SPacketTitle spackettitle = new SPacketTitle(titleType, toShow);
         entityPlayerMP.playerNetServerHandler.sendPacket(spackettitle);
