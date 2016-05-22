@@ -146,7 +146,7 @@ public class Functions {
     public static void displayTitleMessage(SPacketTitle.Type titleType, EntityPlayerMP entityPlayerMP, ITextComponent toShow) {
 
         SPacketTitle spackettitle = new SPacketTitle(titleType, toShow);
-        entityPlayerMP.playerNetServerHandler.sendPacket(spackettitle);
+        entityPlayerMP.connection.sendPacket(spackettitle);
     }
 
 }
