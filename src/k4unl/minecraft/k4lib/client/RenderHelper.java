@@ -247,7 +247,7 @@ public class RenderHelper {
         } catch (IllegalStateException e) {
             wasTessellating = true;
         }
-        FMLClientHandler.instance().getClient().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+        FMLClientHandler.instance().getClient().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
         return wasTessellating;
     }
@@ -487,33 +487,33 @@ public class RenderHelper {
 		GL11.glColor3f(1.0F, 1.0F, 1.0F);
 		*/
     }
-	
+
 	public static void draw2DCircle(float xCenter, float yCenter, float r){
-		
+
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		GL11.glBegin(GL11.GL_TRIANGLES);
 		int angle = 0;
 		int resolution = 10;
 		float dToR = (float)(Math.PI / 180.0);
-		
+
 		double prevX = xCenter + (r*Math.cos((angle-resolution)*dToR));
 		double prevY = yCenter + (r*Math.sin((angle-resolution)*dToR));
 		while(angle < 360){
 			double x = xCenter + (r*Math.cos(angle*dToR));
 			double y = yCenter + (r*Math.sin(angle*dToR));
-			
+
 			GL11.glVertex2f(xCenter, yCenter);
 			GL11.glVertex2d(x, y);
 			GL11.glVertex2d(prevX, prevY);
 			prevX = x;
 			prevY = y;
-			
+
 			angle+= resolution;
 		}
 		GL11.glEnd();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 	}
-	
+
 	public static void drawCylinder(float xCenter, float yCenter, float zCenter, float r, float length, float xTextureStart, float yTextureStart, float xTextureEnd, float yTextureEnd){
 		int ltd = 0;
 		float x;
@@ -527,29 +527,29 @@ public class RenderHelper {
 		for(ltd = 0; ltd < 360; ltd+=reso){
 			x = (float) (xCenter + (Math.sin(ltd * dToR) * r));
 			z = (float) (zCenter + (Math.cos(ltd * dToR) * r));
-			
+
 			x2 = (float) (xCenter + (Math.sin((ltd+reso) * dToR) * r));
 			z2 = (float) (zCenter + (Math.cos((ltd+reso) * dToR) * r));
-			
+
 			//GL11.glColor3f(ltd/360.0F, 0.0F, 0F);
-			
+
 			GL11.glTexCoord2f(xTextureStart, yTextureStart);
 			GL11.glVertex3f(x2, yCenter, z2);
-			
+
 			GL11.glTexCoord2f(xTextureEnd, yTextureStart);
 			GL11.glVertex3f(x2, yCenter+length, z2);
-			
+
 			GL11.glTexCoord2f(xTextureEnd, yTextureEnd);
 			GL11.glVertex3f(x, yCenter+length, z);
-			
+
 			GL11.glTexCoord2f(xTextureStart, yTextureEnd);
 			GL11.glVertex3f(x, yCenter, z);
 		}
 		GL11.glEnd();
 	}
-	
 
-	
+
+
 	public static void renderSide(Vector3fMax vector, EnumFacing dir){
 		//Top side
 		if(dir == EnumFacing.UP){
@@ -558,7 +558,7 @@ public class RenderHelper {
 			GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
 			GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
 		}
-		
+
 		//Bottom side
 		if(dir == EnumFacing.DOWN){
 			GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
@@ -566,7 +566,7 @@ public class RenderHelper {
 			GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
 			GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
 		}
-		
+
 		//West side
 		if(dir == EnumFacing.WEST){
 			GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
@@ -574,7 +574,7 @@ public class RenderHelper {
 			GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
 			GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
 		}
-		
+
 		//East side
 		if(dir == EnumFacing.EAST){
 			GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
@@ -582,7 +582,7 @@ public class RenderHelper {
 			GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
 			GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
 		}
-		
+
 		//North side
 		if(dir == EnumFacing.NORTH){
 			GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
@@ -590,7 +590,7 @@ public class RenderHelper {
 			GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
 			GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
 		}
-		
+
 		//South side
 		if(dir == EnumFacing.SOUTH){
 			GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
@@ -604,20 +604,20 @@ public class RenderHelper {
 		float minNP = RenderHelper.pixel * size;
 		float maxPP = RenderHelper.pixel * (16-(size+1));
 		float maxNP = RenderHelper.pixel * (16-size);
-		
+
 		Vector3fMax vNS = new Vector3fMax(minPP, minPP, minNP, maxPP, maxPP, maxNP);
 		Vector3fMax vEW = new Vector3fMax(minNP, minPP, minPP, maxNP, maxPP, maxPP);
 		Vector3fMax vTB = new Vector3fMax(minPP, minNP, minPP, maxPP, maxNP, maxPP);
 		GL11.glColor3f(rF, gF, bF);
 		RenderHelper.renderSide(vNS, EnumFacing.NORTH);
 		RenderHelper.renderSide(vNS, EnumFacing.SOUTH);
-		
+
 		RenderHelper.renderSide(vEW, EnumFacing.EAST);
 		RenderHelper.renderSide(vEW, EnumFacing.WEST);
-		
+
 		RenderHelper.renderSide(vTB, EnumFacing.UP);
 		RenderHelper.renderSide(vTB, EnumFacing.DOWN);
-		
+
 		if(!isActive){
 			GL11.glColor3f(1.0F, 0.0F, 0.0F);
 		}else{
@@ -625,21 +625,21 @@ public class RenderHelper {
 		}
 		Vector3fMax vEWS = new Vector3fMax(minNP, minNP, minNP, maxNP, maxNP, minPP);
 		Vector3fMax vEWN = new Vector3fMax(minNP, minNP, maxPP, maxNP, maxNP, maxNP);
-		
+
 		Vector3fMax vEWT = new Vector3fMax(minNP, maxPP, minPP, maxNP, maxNP, maxPP);
 		Vector3fMax vEWB = new Vector3fMax(minNP, minNP, minPP, maxNP, minPP, maxPP);
-		
+
 		Vector3fMax vNSW = new Vector3fMax(minNP, minNP, minNP, minPP, maxNP, maxNP);
 		Vector3fMax vNSE = new Vector3fMax(maxPP, minNP, minNP, maxNP, maxNP, maxNP);
 		Vector3fMax vNST = new Vector3fMax(minPP, maxPP, minNP, maxPP, maxNP, maxNP);
 		Vector3fMax vNSB = new Vector3fMax(minPP, minNP, minNP, maxPP, minPP, maxNP);
-		
-		
+
+
 		Vector3fMax vTBW = new Vector3fMax(minNP, minNP, minNP, minPP, maxNP, maxNP);
 		Vector3fMax vTBE = new Vector3fMax(maxPP, minNP, minNP, maxNP, maxNP, maxNP);
 		Vector3fMax vTBN = new Vector3fMax(minPP, minNP, minNP, maxPP, maxNP, minPP);
 		Vector3fMax vTBS = new Vector3fMax(minPP, minNP, maxPP, maxPP, maxNP, maxNP);
-		
+
 		RenderHelper.renderSide(vEWS, EnumFacing.EAST);
 		RenderHelper.renderSide(vEWS, EnumFacing.WEST);
 		RenderHelper.renderSide(vEWN, EnumFacing.EAST);
@@ -648,18 +648,18 @@ public class RenderHelper {
 		RenderHelper.renderSide(vEWT, EnumFacing.WEST);
 		RenderHelper.renderSide(vEWB, EnumFacing.EAST);
 		RenderHelper.renderSide(vEWB, EnumFacing.WEST);
-		
-		
+
+
 		RenderHelper.renderSide(vNSW, EnumFacing.NORTH);
 		RenderHelper.renderSide(vNSW, EnumFacing.SOUTH);
 		RenderHelper.renderSide(vNSE, EnumFacing.NORTH);
 		RenderHelper.renderSide(vNSE, EnumFacing.SOUTH);
-		
+
 		RenderHelper.renderSide(vNST, EnumFacing.NORTH);
 		RenderHelper.renderSide(vNST, EnumFacing.SOUTH);
 		RenderHelper.renderSide(vNSB, EnumFacing.NORTH);
 		RenderHelper.renderSide(vNSB, EnumFacing.SOUTH);
-		
+
 		RenderHelper.renderSide(vTBW, EnumFacing.UP);
 		RenderHelper.renderSide(vTBW, EnumFacing.DOWN);
 		RenderHelper.renderSide(vTBE, EnumFacing.UP);
@@ -669,38 +669,38 @@ public class RenderHelper {
 		RenderHelper.renderSide(vTBS, EnumFacing.UP);
 		RenderHelper.renderSide(vTBS, EnumFacing.DOWN);
 	}
-	
+
 	public static void drawWhiteCube(Vector3fMax vector){
 		//Top side
 		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
 		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
 		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
 		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
-		
+
 		//Bottom side
 		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
 		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
 		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
 		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
-		
+
 		//West side
 		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
 		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
 		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
 		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
-		
+
 		//East side
 		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
 		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
 		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMax());
 		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
-		
+
 		//North side
 		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMin());
 		GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMin());
 		GL11.glVertex3f(vector.getXMax(), vector.getYMax(), vector.getZMin());
 		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMin());
-		
+
 		//South side
 		GL11.glVertex3f(vector.getXMin(), vector.getYMin(), vector.getZMax());
 		GL11.glVertex3f(vector.getXMax(), vector.getYMin(), vector.getZMax());
