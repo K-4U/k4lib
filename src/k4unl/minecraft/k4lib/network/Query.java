@@ -161,7 +161,7 @@ public class Query {
         }
     }
 
-    public void requestExtendedInfo(EnumQueryValues... values) throws IOException {
+    public void requestExtendedInfo(EnumSIPValues... values) throws IOException {
         final DatagramSocket socket = new DatagramSocket();
         try {
             Log.debug("Requesting extended info");
@@ -181,7 +181,7 @@ public class Query {
 
             //Setup json:
             List<String> toRequest = new ArrayList<String>();
-            for(EnumQueryValues value : values){
+            for(EnumSIPValues value : values){
                 toRequest.add(value.toString());
             }
 
@@ -300,7 +300,7 @@ public class Query {
         return new String(Arrays.copyOfRange(array, startPosition, cursor.get()));
     }
 
-    public Object getExtendedObject(EnumQueryValues key) {
+    public Object getExtendedObject(EnumSIPValues key) {
         if(extendedValues.containsKey(key.toString())){
             return extendedValues.get(key.toString());
         }else{
