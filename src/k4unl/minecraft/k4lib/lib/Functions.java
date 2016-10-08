@@ -9,6 +9,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 import java.util.List;
 
@@ -68,5 +69,14 @@ public class Functions {
 
         return Boolean.parseBoolean(System.getProperty("k4lib.dev", "false"));
     }
-
+    
+    public static WorldServer getWorldServerForDimensionId(int dimensionId) {
+        
+        for (WorldServer server : MinecraftServer.getServer().worldServers) {
+            if (server.provider.dimensionId == dimensionId) {
+                return server;
+            }
+        }
+        return null;
+    }
 }
