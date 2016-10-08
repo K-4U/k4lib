@@ -4,7 +4,7 @@ package k4unl.minecraft.k4lib.network;
  * @author Koen Beckers (K-4U)
  */
 public enum EnumSIPValues {
-    INVALID, MISFORMED, TIME, PLAYERS, DAYNIGHT, DIMENSIONS, UPTIME, DEATHS, WEATHER, BLOCKINFO, RF, FLUID, INVENTORY;
+    INVALID, MISFORMED, TIME, PLAYERS, DAYNIGHT, DIMENSIONS, UPTIME, DEATHS, WEATHER, BLOCKINFO, FLUID, INVENTORY;
 
     public static EnumSIPValues fromString(String str) {
         for(EnumSIPValues v : values()){

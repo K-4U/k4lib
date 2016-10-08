@@ -12,6 +12,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
@@ -148,5 +149,15 @@ public class Functions {
         SPacketTitle spackettitle = new SPacketTitle(titleType, toShow);
         entityPlayerMP.connection.sendPacket(spackettitle);
     }
-
+    
+    public static WorldServer getWorldServerForDimensionId(int dimensionId) {
+        
+        for (WorldServer server : getServer().worldServers) {
+            if (server.provider.getDimension() == dimensionId) {
+                return server;
+            }
+        }
+        return null;
+    }
+    
 }
