@@ -1,11 +1,14 @@
 package k4unl.minecraft.k4lib.lib;
 
 import com.mojang.authlib.GameProfile;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SPacketTitle;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.RayTraceResult;
@@ -158,6 +161,13 @@ public class Functions {
             }
         }
         return null;
+    }
+    
+    
+    public static IBlockState getBlockStateFromItemStack(ItemStack in){
+    
+        Block block = Block.getBlockFromItem(in.getItem());
+        return block.getStateFromMeta(in.getItemDamage());
     }
     
 }

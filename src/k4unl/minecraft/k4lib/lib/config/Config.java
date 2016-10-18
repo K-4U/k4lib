@@ -3,6 +3,7 @@ package k4unl.minecraft.k4lib.lib.config;
 import net.minecraftforge.common.config.Configuration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Config {
@@ -107,7 +108,25 @@ public class Config {
         }
         return 0;
     }
-
+    
+    public List getList(String key){
+        for(ConfigOption config : this.configOptions){
+            if(config.getKey().equals(key)){
+                return Arrays.asList(config.getString().split(" "));
+            }
+        }
+        return null;
+    }
+    
+    public List getList(String key, String category){
+        for(ConfigOption config : this.configOptions){
+            if(config.getKey().equals(key) && config.getCategory().equals(category)){
+                return Arrays.asList(config.getString().split(" "));
+            }
+        }
+        return null;
+    }
+    
     public void setBool(String key, boolean newValue){
         for(ConfigOption config : this.configOptions){
             if(config.getKey().equals(key)){
@@ -193,6 +212,24 @@ public class Config {
         for(ConfigOption config : this.configOptions){
             if(config.getKey().equals(key) && config.getCategory().equals(category)){
                 config.setDouble(newValue);
+                config.saveConfig();
+            }
+        }
+    }
+    
+    public void setList(String key, List newValue){
+        for(ConfigOption config : this.configOptions){
+            if(config.getKey().equals(key)){
+                config.setString(String.join(" ", newValue));
+                config.saveConfig();
+            }
+        }
+    }
+    
+    public void setList(String key, String category, List newValue){
+        for(ConfigOption config : this.configOptions){
+            if(config.getKey().equals(key) && config.getCategory().equals(category)){
+                config.setString(String.join(" ", newValue));
                 config.saveConfig();
             }
         }
