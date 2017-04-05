@@ -23,9 +23,9 @@ public class CustomTeleporter extends Teleporter {
 
     @Override
     public void placeInPortal(Entity entity, float rotationYaw) {
-        int newX = MathHelper.floor_double(entity.posX);
-        int newY = MathHelper.floor_double(entity.posY);
-        int newZ = MathHelper.floor_double(entity.posZ);
+        int newX = MathHelper.floor(entity.posX);
+        int newY = MathHelper.floor(entity.posY);
+        int newZ = MathHelper.floor(entity.posZ);
         entity.setLocationAndAngles(newX, newY, newZ, rotationYaw, 0.0F);
     }
 

@@ -3,25 +3,25 @@ package k4unl.minecraft.k4lib.lib;
 import net.minecraft.item.ItemStack;
 
 public class ItemStackUtils {
+    
     public static boolean canMergeStacks(ItemStack a, ItemStack b) {
-        if (a == null || b == null)
-            return true;
-
-        if (a.isItemEqual(b) && a.getMaxStackSize() >= a.stackSize + b.stackSize)
-            return true;
-
-        return false;
+        
+        return ItemStack.areItemStacksEqual(a, b);
     }
-
+    
     public static ItemStack mergeStacks(ItemStack a, ItemStack b) {
-        if (a == null && b != null)
+        
+        if (a == null && b != null) {
             return b.copy();
-        else if (b == null && a != null)
+        } else if (b == null && a != null) {
             return a.copy();
-        else if (a == null && b == null)
+        } else if (a == null && b == null) {
             return null;
-
-        a.stackSize += b.stackSize;
+        } else if (a.getCount() + b.getCount() > a.getMaxStackSize()) {
+            return null;
+        }
+        
+        a.setCount(a.getCount() + b.getCount());
         return a;
     }
 }

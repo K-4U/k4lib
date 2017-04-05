@@ -10,5 +10,6 @@ public class Commands {
 
     public static void init(FMLServerStartingEvent event){
         event.registerServerCommand(new CommandK4Lib());
+        event.registerServerCommand(new CommandCoords());
     }
 }

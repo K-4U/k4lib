@@ -24,7 +24,7 @@ public abstract class AbstractPacket<REQ extends IMessage> implements IMessage, 
     public REQ onMessage(REQ message, MessageContext ctx) {
     
         if (ctx.side == Side.SERVER) {
-            handleServerSide(message, ctx.getServerHandler().playerEntity);
+            handleServerSide(message, ctx.getServerHandler().player);
         } else {
             handleClientSide(message, K4Lib.proxy.getPlayer());
         }

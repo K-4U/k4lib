@@ -9,13 +9,13 @@ import net.minecraft.util.text.TextComponentString;
 public class CommandCoords extends CommandK4Base {
 
     @Override
-    public String getCommandName() {
+    public String getName() {
 
         return "coords";
     }
 
     @Override
-    public String getCommandUsage(ICommandSender sender) {
+    public String getUsage(ICommandSender sender) {
 
         return "/coords. Print coordinates you're at.";
     }

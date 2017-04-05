@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by K-4U on 30-6-2015.
+ * @author Koen Beckers (K-4U)
  */
 public abstract class CommandK4Base extends CommandBase {
-    protected List<String> aliases = new ArrayList<String>();
+    private List<String> aliases = new ArrayList<String>();
 
     public List getCommandAliases()
     {
@@ -18,8 +18,8 @@ public abstract class CommandK4Base extends CommandBase {
     }
 
     @Override
-    public abstract String getCommandName();
+    public abstract String getName();
 
     @Override
-    public abstract String getCommandUsage(ICommandSender p_71518_1_);
+    public abstract String getUsage(ICommandSender p_71518_1_);
 }

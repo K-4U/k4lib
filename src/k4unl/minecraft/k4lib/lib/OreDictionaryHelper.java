@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
@@ -42,7 +41,7 @@ public class OreDictionaryHelper {
    public static Block findValidBlock(String name) {
       return Block.getBlockFromItem(findValidItem(name));
    }
-
+/* TODO: Update to 1.11 code
    public static Block registerBlock(Block block, String name) {
       if (!doesOreNameExist(name)) {
          GameRegistry.registerBlock(block, name);
@@ -61,5 +60,5 @@ public class OreDictionaryHelper {
       } else {
          return findValidItem(name);
       }
-   }
+   }*/
 }
