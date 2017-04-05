@@ -20,7 +20,7 @@ project.ext {
     mcVersion="1.11.2"
 }
 
-version = project.ext.mcVersion + "-1.0." + project.ext.buildNum
+version = project.ext.mcVersion + "-2.1." + project.ext.buildNum
 group= "k4unl" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "k4lib"
 
