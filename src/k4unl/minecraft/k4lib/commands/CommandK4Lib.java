@@ -15,7 +15,7 @@ public class CommandK4Lib extends CommandK4OpOnly {
 
     @Override
     public String getUsage(ICommandSender p_71518_1_) {
-        return null;
+        return "/k4lib version";
     }
 
     @Override
