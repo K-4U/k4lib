@@ -18,6 +18,7 @@ public enum EnumSIPValues {
     , INVENTORY
     , TPS
     , ENTITIES
+    , VERSIONS
     ;
 
     public static EnumSIPValues fromString(String str) {
