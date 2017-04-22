@@ -15,6 +15,7 @@ public enum EnumSIPValues {
     , WEATHER
     , TPS
     , ENTITIES
+    , VERSIONS
     ;
 
     public static EnumSIPValues fromString(String str) {
