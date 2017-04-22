@@ -28,6 +28,11 @@ version = project.ext.mcVersion + "-0.1." + project.ext.buildNum
 group= "k4unl" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "k4lib"
 
+allprojects {
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
 
 minecraft {
     version = "${project.ext.mcVersion}-10.13.4.1448-1.7.10"
