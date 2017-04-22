@@ -1,6 +1,7 @@
 package k4unl.minecraft.k4lib.lib;
 
 import com.mojang.authlib.GameProfile;
+import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
@@ -79,4 +80,10 @@ public class Functions {
         }
         return null;
     }
+    
+    public static MinecraftServer getServer() {
+        
+        return FMLCommonHandler.instance().getMinecraftServerInstance();
+    }
+    
 }
