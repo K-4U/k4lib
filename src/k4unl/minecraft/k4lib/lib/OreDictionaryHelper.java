@@ -18,7 +18,7 @@ public class OreDictionaryHelper {
       boolean foundValid = false;
       for (ItemStack stack : stacks) {
          if (stack == null || stack.getItem() == null)
-            FMLLog.severe("Some mod has registered a null itemstack or an itemstack with a null item\ninto oredictionary for " +
+            Log.error("Some mod has registered a null itemstack or an itemstack with a null item\ninto oredictionary for " +
                     name + ".\nThis is NOT a K4Lib/.. issue! Do NOT report it to us! We have no way of knowing the owner!");
          else
             foundValid = true;
@@ -33,7 +33,7 @@ public class OreDictionaryHelper {
             return stack.getItem();
       }
 
-      FMLLog.severe("For some reason I have not found any valid itemstack. This is going to crash eventually...");
+      Log.error("For some reason I have not found any valid itemstack. This is going to crash eventually...");
 
       return null;
    }

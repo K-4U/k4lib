@@ -2,7 +2,7 @@ package k4unl.minecraft.k4lib.client;
 
 import k4unl.minecraft.k4lib.lib.Vector3fMax;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -21,7 +21,7 @@ public class RenderHelper {
     static         float         lightEastWest   = 0.8F;
     static         float         lightNorthSouth = 0.6F;
     private static Tessellator   tess            = Tessellator.getInstance();
-    private static VertexBuffer  worldRenderer   = tess.getBuffer();
+    private static BufferBuilder  worldRenderer   = tess.getBuffer();
     public static  float         pixel           = 1.0F / 16.0F;
     public static  float         renderPixel     = 1.0F / 32.0F;
     public static  float         bigRenderPixel  = 1.0F / 64.0F;

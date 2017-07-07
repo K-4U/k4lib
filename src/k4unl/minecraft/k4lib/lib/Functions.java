@@ -164,7 +164,7 @@ public class Functions {
     }
     
     
-    //TODO: Rewrite me to 1.11
+    //TODO: Rewrite me to 1.11/1.12
     public static IBlockState getBlockStateFromItemStack(ItemStack in) {
         
         Block block = Block.getBlockFromItem(in.getItem());

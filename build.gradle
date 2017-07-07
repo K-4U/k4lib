@@ -8,7 +8,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 
@@ -17,7 +17,7 @@ apply plugin: 'maven-publish'
 
 project.ext {
     buildNum = System.getenv("BUILD_NUMBER")
-    mcVersion="1.11.2"
+    mcVersion="1.12"
 }
 
 version = project.ext.mcVersion + "-2.1." + project.ext.buildNum
@@ -31,7 +31,7 @@ allprojects {
 }
 
 minecraft {
-    version = "${project.ext.mcVersion}-13.20.0.2263"
+    version = "${project.ext.mcVersion}-14.21.1.2387"
     replace "@VERSION@", project.version
     replace "@BUILDNUM@", project.ext.buildNum
 
