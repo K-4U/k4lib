@@ -21,6 +21,8 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 public class K4Lib {
 
+
+
     //This is the instance that Forge uses:
     @Mod.Instance(value = ModInfo.ID)
     public static K4Lib instance;
@@ -36,7 +38,7 @@ public class K4Lib {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
 
-        Log.init();
+        Log.init(event.getModLog());
 
         Config.INSTANCE.init();
         ConfigHandler.init(Config.INSTANCE, event.getSuggestedConfigurationFile());

@@ -7,30 +7,32 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Log {
-    private static Logger logger = LogManager.getLogger(ModInfo.ID);
+    private static Logger logger = null;
 
-    public static void init() {
-
+    public static void init(Logger modLog) {
+        logger = modLog;
     }
 
-    public static void info(String message) {
-
-        logger.log(Level.INFO, message);
+    private static void log(Level level, String format, Object... data) {
+        logger.log(level, String.format(format, data));
     }
 
-    public static void error(String message) {
+    public static void info(String message, Object... data) {
+        log(Level.INFO, message, data);
+    }
 
-        logger.log(Level.ERROR, message);
-	}
+    public static void error(String format, Object... data) {
+        log(Level.ERROR, format, data);
+    }
 	
-	public static void warning(String message){
-		logger.log(Level.WARN, message);
+	public static void warning(String message, Object... data){
+		log(Level.WARN, message, data);
 	}
 
 
-    public static void debug(String message){
+    public static void debug(String message, Object... data){
         if(Config.INSTANCE.getBool("debug")){
-            logger.log(Level.INFO, message);
+            log(Level.INFO, message, data);
         }
     }
 }
