@@ -17,7 +17,7 @@ apply plugin: 'maven-publish'
 
 project.ext {
     buildNum = System.getenv("BUILD_NUMBER")
-    mcVersion="1.12"
+    mcVersion="1.12.1"
 }
 
 version = project.ext.mcVersion + "-2.1." + project.ext.buildNum
@@ -31,11 +31,11 @@ allprojects {
 }
 
 minecraft {
-    version = "${project.ext.mcVersion}-14.21.1.2387"
+    version = "${project.ext.mcVersion}-14.22.0.2452"
     replace "@VERSION@", project.version
     replace "@BUILDNUM@", project.ext.buildNum
 
-    mappings = "snapshot_20170405"
+    mappings = "snapshot_20170810"
 
     runDir = "../Minecraft/"
 }

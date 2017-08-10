@@ -71,7 +71,7 @@ public class Functions {
         
         Vec3d entityVec = new Vec3d(entity.posX, entity.posY + entity.getEyeHeight() - entity.getYOffset() - (entity.isSneaking() ? 0.08 : 0), entity.posZ);
         Vec3d entityLookVec = entity.getLook(1.0F);
-        Vec3d maxDistVec = entityVec.addVector(entityLookVec.xCoord * maxDistance, entityLookVec.yCoord * maxDistance, entityLookVec.zCoord * maxDistance);
+        Vec3d maxDistVec = entityVec.addVector(entityLookVec.x * maxDistance, entityLookVec.y * maxDistance, entityLookVec.z * maxDistance);
         return entity.getEntityWorld().rayTraceBlocks(entityVec, maxDistVec);
     }
     
