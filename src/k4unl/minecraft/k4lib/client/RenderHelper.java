@@ -1,8 +1,9 @@
 package k4unl.minecraft.k4lib.client;
 
 import k4unl.minecraft.k4lib.lib.Vector3fMax;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -754,6 +755,29 @@ public class RenderHelper {
         vertexWithTexture(vector.getXMax(), vector.getYMax(), vector.getZMax(), icon.getMaxU(), icon.getMinV()); //TL
         vertexWithTexture(vector.getXMin(), vector.getYMax(), vector.getZMax(), icon.getMinU(), icon.getMinV()); //TR
         vertexWithTexture(vector.getXMin(), vector.getYMin(), vector.getZMax(), icon.getMinU(), icon.getMaxV()); //BR
+    }
+    
+    /**
+     * <p>Computes the current GUI scale. Calling this method is equivalent to the following:<pre><code>
+     * Minecraft mc = Minecraft.getMinecraft();
+     * int scale = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight).getScaleFactor();</code></pre></p>
+     *
+     * @return the current GUI scale
+     */
+    public static int computeGuiScale() {
+        Minecraft mc = Minecraft.getMinecraft();
+        int scaleFactor = 1;
+        
+        int k = mc.gameSettings.guiScale;
+        
+        if (k == 0) {
+            k = 1000;
+        }
+        
+        while (scaleFactor < k && mc.displayWidth / (scaleFactor + 1) >= 320 && mc.displayHeight / (scaleFactor + 1) >= 240) {
+            ++scaleFactor;
+        }
+        return scaleFactor;
     }
 
 }
