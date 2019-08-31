@@ -1,16 +1,13 @@
 package k4unl.minecraft.k4lib.lib;
 
 import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import k4unl.minecraft.k4lib.lib.config.Config;
 
 public class Log {
-	private static Logger logger = null;
-
-	public static void init(Logger modLog) {
-		logger = modLog;
-	}
+	private static final Logger logger = LogManager.getLogger();
 
 	private static void log(Level level, String format, Object... data) {
 		logger.log(level, String.format(format, data));

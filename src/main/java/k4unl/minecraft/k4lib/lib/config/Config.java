@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 
+import k4unl.minecraft.k4lib.lib.Log;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -14,41 +15,28 @@ import net.minecraftforge.fml.loading.FMLPaths;
 public abstract class Config {
 
 	public static final String CATEGORY_GENERAL = "general";
-
-	private static final ForgeConfigSpec.Builder SERVER_BUILDER = new ForgeConfigSpec.Builder();
-	private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
-	private static final ForgeConfigSpec.Builder CLIENT_BUILDER = new ForgeConfigSpec.Builder();
-
-	public static ForgeConfigSpec COMMON_CONFIG;
-	public static ForgeConfigSpec SERVER_CONFIG;
-	public static ForgeConfigSpec CLIENT_CONFIG;
-
 	public static ForgeConfigSpec.BooleanValue debug;
+	private final ForgeConfigSpec.Builder clientBuilder = new ForgeConfigSpec.Builder();
+	private final ForgeConfigSpec.Builder serverBuilder = new ForgeConfigSpec.Builder();
+	private final ForgeConfigSpec.Builder commonBuilder = new ForgeConfigSpec.Builder();
+	public ForgeConfigSpec commonConfig;
+	public ForgeConfigSpec serverConfig;
+	public ForgeConfigSpec clientConfig;
 
-	static {
-		COMMON_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
-		debug = COMMON_BUILDER.comment("Whether debug is enabled or not. Only enable this if you plan to actually debug stuff!").define("debug", false);
+	public Config() {
+		commonBuilder.comment("General settings").push(CATEGORY_GENERAL);
+		debug = commonBuilder.comment("Whether debug is enabled or not. Only enable this if you plan to actually debug stuff!").define("debug", false);
+		buildCommon(commonBuilder);
+		commonBuilder.pop();
 
-		COMMON_BUILDER.pop();
-		COMMON_CONFIG = COMMON_BUILDER.build();
+		clientBuilder.comment("General settings").push(CATEGORY_GENERAL);
+		buildClient(clientBuilder);
+		clientBuilder.pop();
 
-		CLIENT_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
-		CLIENT_BUILDER.pop();
-		CLIENT_CONFIG = CLIENT_BUILDER.build();
 
-		SERVER_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
-		SERVER_BUILDER.pop();
-		SERVER_CONFIG = SERVER_BUILDER.build();
-	}
-
-	public static void init(String modid) {
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CLIENT_CONFIG);
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON_CONFIG);
-		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG);
-
-		Config.loadConfig(CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve(modid + ".toml"));
-		Config.loadConfig(COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(modid + ".toml"));
-		Config.loadConfig(SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve(modid + ".toml"));
+		serverBuilder.comment("General settings").push(CATEGORY_GENERAL);
+		buildServer(serverBuilder);
+		serverBuilder.pop();
 	}
 
 	private static void loadConfig(ForgeConfigSpec spec, Path path) {
@@ -61,6 +49,7 @@ public abstract class Config {
 
 		configData.load();
 		spec.setConfig(configData);
+		Log.info("And the value is...");
 	}
 
 	@SubscribeEvent
@@ -70,6 +59,26 @@ public abstract class Config {
 
 	@SubscribeEvent
 	public static void onReload(final ModConfig.ConfigReloading configEvent) {
+	}
+
+	protected abstract void buildCommon(ForgeConfigSpec.Builder builder);
+
+	protected abstract void buildServer(ForgeConfigSpec.Builder builder);
+
+	protected abstract void buildClient(ForgeConfigSpec.Builder builder);
+
+	public void load(String modid) {
+		commonConfig = commonBuilder.build();
+		clientConfig = clientBuilder.build();
+		serverConfig = serverBuilder.build();
+
+		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, clientConfig);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, commonConfig);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, serverConfig);
+
+		Config.loadConfig(clientConfig, FMLPaths.CONFIGDIR.get().resolve(modid + ".toml"));
+		Config.loadConfig(serverConfig, FMLPaths.CONFIGDIR.get().resolve(modid + ".toml"));
+		Config.loadConfig(commonConfig, FMLPaths.CONFIGDIR.get().resolve(modid + ".toml"));
 	}
 }
 

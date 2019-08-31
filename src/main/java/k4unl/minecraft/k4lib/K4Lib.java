@@ -3,6 +3,7 @@ package k4unl.minecraft.k4lib;
 
 import k4unl.minecraft.k4lib.commands.CommandsRegistry;
 import k4unl.minecraft.k4lib.lib.config.Config;
+import k4unl.minecraft.k4lib.lib.config.K4LibConfig;
 import k4unl.minecraft.k4lib.lib.config.ModInfo;
 import k4unl.minecraft.k4lib.network.NetworkHandler;
 import k4unl.minecraft.k4lib.proxy.ClientProxy;
@@ -25,7 +26,8 @@ public class K4Lib {
 	public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
 	public K4Lib() {
-		Config.init(ModInfo.ID);
+		Config config = new K4LibConfig();
+		config.load(ModInfo.ID);
 		instance = this;
 		FMLJavaModLoadingContext.get().getModEventBus().register(this);
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStart);
@@ -42,5 +44,5 @@ public class K4Lib {
 	public void onServerStart(FMLServerAboutToStartEvent event) {
 		boolean b = event.getServer() instanceof DedicatedServer;
 		CommandsRegistry commandsRegistry = new CommandsRegistry(b, event.getServer().getCommandManager().getDispatcher());
-    }
+	}
 }

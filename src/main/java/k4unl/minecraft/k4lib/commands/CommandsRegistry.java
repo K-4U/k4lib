@@ -17,6 +17,9 @@ public class CommandsRegistry {
 		register(dispatcher, new CommandK4Lib());
 	}
 
+	public CommandsRegistry() {
+	}
+
 	public static void register(CommandDispatcher<CommandSource> dispatcher, Command command) {
 		LiteralArgumentBuilder<CommandSource> literalArgumentBuilder = Commands.literal(command.getName()).requires(command::canUse);
 		command.register(literalArgumentBuilder);
