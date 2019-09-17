@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -128,6 +129,22 @@ public class Location {
 
 	public Location(BlockPos pos, Direction baseDir, int offset) {
 		this(pos.getX(), pos.getY(), pos.getZ(), baseDir, offset);
+	}
+
+	public Location(CompoundNBT locationNbt) {
+		this.setX(locationNbt.getInt("x"));
+		this.setY(locationNbt.getInt("y"));
+		this.setZ(locationNbt.getInt("z"));
+		this.dimension = locationNbt.getInt("dimension");
+	}
+
+	public CompoundNBT getNBT() {
+		CompoundNBT nbt = new CompoundNBT();
+		nbt.putInt("x", this.getX());
+		nbt.putInt("y", this.getY());
+		nbt.putInt("z", this.getZ());
+		nbt.putInt("dimension", this.getDimension());
+		return nbt;
 	}
 
 	public boolean equals(Location toTest) {
@@ -273,4 +290,5 @@ public class Location {
 	public BlockState getBlockState(World worldObj) {
 		return worldObj.getBlockState(this.toBlockPos());
 	}
+
 }
