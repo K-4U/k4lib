@@ -8,10 +8,12 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.network.play.server.STitlePacket;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
@@ -20,6 +22,7 @@ import net.minecraftforge.fml.LogicalSidedProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Functions {
 
@@ -96,7 +99,6 @@ public class Functions {
 	 * to do this.
 	 *
 	 * @param player
-	 *
 	 * @return
 	 */
 	public static int getPlayerXP(PlayerEntity player) {
@@ -156,6 +158,7 @@ public class Functions {
 		entityPlayerMP.connection.sendPacket(spackettitle);
 	}
 
+	@Deprecated
 	public static ServerWorld getWorldServerForDimensionId(int dimensionId) {
 		for (ServerWorld world : getServer().getWorlds()) {
 			if (world.getDimension().getType().getId() == dimensionId) {
@@ -163,6 +166,12 @@ public class Functions {
 			}
 		}
 		return null;
+	}
+
+	public static Optional<DimensionType> getDimensionTypeForString(String key) {
+		ResourceLocation resourceLocation = new ResourceLocation(key);
+
+		return Registry.DIMENSION_TYPE.getValue(resourceLocation);
 	}
 
 	public static List<Integer> getDimensionIds() {
