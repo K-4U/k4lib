@@ -8,7 +8,6 @@
 package k4unl.minecraft.k4lib.network.messages;
 
 import io.netty.buffer.ByteBuf;
-import k4unl.minecraft.k4lib.network.Message;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.PacketDistributor;
 
@@ -16,7 +15,7 @@ import net.minecraftforge.fml.network.PacketDistributor;
  * @author MineMaarten
  */
 
-public abstract class LocationDoublePacket<REQ extends Message> extends AbstractPacket<REQ> {
+public abstract class LocationDoublePacket extends AbstractPacket {
 
 	protected double x, y, z;
 
@@ -39,8 +38,7 @@ public abstract class LocationDoublePacket<REQ extends Message> extends Abstract
 		buf.writeDouble(z);
 	}
 
-	@Override
-	public void fromBytes(ByteBuf buf) {
+	public LocationDoublePacket(ByteBuf buf) {
 
 		x = buf.readDouble();
 		y = buf.readDouble();

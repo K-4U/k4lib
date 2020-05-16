@@ -8,7 +8,6 @@
 package k4unl.minecraft.k4lib.network.messages;
 
 import io.netty.buffer.ByteBuf;
-import k4unl.minecraft.k4lib.network.Message;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -18,40 +17,39 @@ import net.minecraftforge.fml.network.PacketDistributor;
  * @author MineMaarten
  */
 
-public abstract class LocationIntPacket<REQ extends Message> extends AbstractPacket<REQ> {
+public abstract class LocationIntPacket extends AbstractPacket {
 
-	protected int x, y, z;
-	protected BlockPos pos;
+    protected int x, y, z;
+    protected BlockPos pos;
 
-	public LocationIntPacket() {
+    public LocationIntPacket() {
 
-	}
+    }
 
-	public LocationIntPacket(BlockPos pos) {
-		this.x = pos.getX();
-		this.y = pos.getY();
-		this.z = pos.getZ();
-		this.pos = pos;
-	}
+    public LocationIntPacket(BlockPos pos) {
+        this.x = pos.getX();
+        this.y = pos.getY();
+        this.z = pos.getZ();
+        this.pos = pos;
+    }
 
-	@Override
-	public void toBytes(ByteBuf buf) {
+    public LocationIntPacket(ByteBuf buf) {
 
-		buf.writeInt(x);
-		buf.writeInt(y);
-		buf.writeInt(z);
-	}
+        x = buf.readInt();
+        y = buf.readInt();
+        z = buf.readInt();
+        this.pos = new BlockPos(x, y, z);
+    }
 
-	@Override
-	public void fromBytes(ByteBuf buf) {
+    @Override
+    public void toBytes(ByteBuf buf) {
 
-		x = buf.readInt();
-		y = buf.readInt();
-		z = buf.readInt();
-		this.pos = new BlockPos(x, y, z);
-	}
+        buf.writeInt(x);
+        buf.writeInt(y);
+        buf.writeInt(z);
+    }
 
-	public PacketDistributor.TargetPoint getTargetPoint(World world) {
+    public PacketDistributor.TargetPoint getTargetPoint(World world) {
 
 		return getTargetPoint(world, 64);
 	}

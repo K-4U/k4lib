@@ -1,7 +1,5 @@
 package k4unl.minecraft.k4lib.client;
 
-import org.lwjgl.opengl.GL11;
-
 import k4unl.minecraft.k4lib.lib.Vector3fMax;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -13,6 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.lwjgl.opengl.GL11;
 
 @OnlyIn(Dist.CLIENT)
 public class RenderHelper {
@@ -600,7 +599,8 @@ public class RenderHelper {
 			GL11.glVertex3f(vector.getXMin(), vector.getYMax(), vector.getZMax());
 		}
 	}
-	public static void drawCubeWithLines(int size, boolean isActive, float rF, float gF, float bF){
+
+    public static void drawCubeWithLines(int size, boolean isActive, float rF, float gF, float bF){
 		float minPP = RenderHelper.pixel * (size+1);
 		float minNP = RenderHelper.pixel * size;
 		float maxPP = RenderHelper.pixel * (16-(size+1));

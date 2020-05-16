@@ -1,9 +1,6 @@
 package k4unl.minecraft.k4lib.lib;
 
-import java.util.List;
-
 import com.mojang.authlib.GameProfile;
-
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,9 +13,13 @@ import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.LogicalSidedProvider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Functions {
 
@@ -158,6 +159,31 @@ public class Functions {
 	public static ServerWorld getWorldServerForDimensionId(int dimensionId) {
 		for (ServerWorld world : getServer().getWorlds()) {
 			if (world.getDimension().getType().getId() == dimensionId) {
+				return world;
+			}
+		}
+		return null;
+	}
+
+	public static List<Integer> getDimensionIds() {
+		List<Integer> retList = new ArrayList<>();
+		for (ServerWorld world : getServer().getWorlds()) {
+			retList.add(world.getDimension().getType().getId());
+		}
+		return retList;
+	}
+
+	public static Iterable<? extends DimensionType> getDimensions() {
+		List<DimensionType> retList = new ArrayList<>();
+		for (ServerWorld world : getServer().getWorlds()) {
+			retList.add(world.getDimension().getType());
+		}
+		return retList;
+	}
+
+	public static ServerWorld getWorldServerForDimensionType(DimensionType dimensionType) {
+		for (ServerWorld world : getServer().getWorlds()) {
+			if (world.getDimension().getType().equals(dimensionType)) {
 				return world;
 			}
 		}

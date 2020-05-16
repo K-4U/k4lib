@@ -5,13 +5,11 @@ import k4unl.minecraft.k4lib.commands.CommandsRegistry;
 import k4unl.minecraft.k4lib.lib.config.Config;
 import k4unl.minecraft.k4lib.lib.config.K4LibConfig;
 import k4unl.minecraft.k4lib.lib.config.ModInfo;
-import k4unl.minecraft.k4lib.network.NetworkHandler;
 import k4unl.minecraft.k4lib.proxy.ClientProxy;
 import k4unl.minecraft.k4lib.proxy.CommonProxy;
 import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -35,7 +33,7 @@ public class K4Lib {
 
 	@SubscribeEvent
 	public void setup(final FMLCommonSetupEvent event) {
-		DeferredWorkQueue.runLater(NetworkHandler::init);
+//		DeferredWorkQueue.runLater(NetworkHandler::init);
 
 		proxy.init(event);
 	}

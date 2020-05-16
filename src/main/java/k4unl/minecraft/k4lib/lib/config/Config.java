@@ -1,16 +1,14 @@
 package k4unl.minecraft.k4lib.lib.config;
 
-import java.nio.file.Path;
-
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
-
-import k4unl.minecraft.k4lib.lib.Log;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.loading.FMLPaths;
+
+import java.nio.file.Path;
 
 public abstract class Config {
 
@@ -49,7 +47,6 @@ public abstract class Config {
 
 		configData.load();
 		spec.setConfig(configData);
-		Log.info("And the value is...");
 	}
 
 	@SubscribeEvent

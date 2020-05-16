@@ -23,7 +23,7 @@ public class CustomTeleporter extends Teleporter {
 
 	//placeInPortal
 	@Override
-	public boolean func_222268_a(Entity entity, float rotationYaw) {
+	public boolean placeInPortal(Entity entity, float rotationYaw) {
 		int newX = MathHelper.floor(entity.posX);
 		int newY = MathHelper.floor(entity.posY);
 		int newZ = MathHelper.floor(entity.posZ);

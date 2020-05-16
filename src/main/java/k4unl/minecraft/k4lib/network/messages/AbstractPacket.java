@@ -7,26 +7,27 @@
  */
 package k4unl.minecraft.k4lib.network.messages;
 
-import java.util.function.Supplier;
-
 import io.netty.buffer.ByteBuf;
 import k4unl.minecraft.k4lib.K4Lib;
-import k4unl.minecraft.k4lib.network.Message;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-/**
- * @author MineMaarten
- */
-public abstract class AbstractPacket<REQ extends Message> implements Message<REQ> {
+import java.util.function.Supplier;
 
-	@Override
-	public void handle(REQ message, Supplier<NetworkEvent.Context> ctx) {
+/**
+ * @author K4Unl
+ * Make sure to create a constructor accepting a bytebuff
+ */
+public abstract class AbstractPacket {
+
+	public abstract void toBytes(ByteBuf buffer);
+
+	public void handle(Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 			if (ctx.get().getDirection().getReceptionSide().isServer()) {
-				handleServerSide(message, ctx.get().getSender());
+				handleServerSide(ctx.get().getSender());
 			} else {
-				handleClientSide(message, K4Lib.proxy.getPlayer());
+				handleClientSide(K4Lib.proxy.getPlayer());
 			}
 			ctx.get().setPacketHandled(true);
 		});
@@ -38,7 +39,7 @@ public abstract class AbstractPacket<REQ extends Message> implements Message<REQ
 	 * @param message TODO
 	 * @param player  the player reference
 	 */
-	public abstract void handleClientSide(REQ message, PlayerEntity player);
+	public abstract void handleClientSide(PlayerEntity player);
 
 	/**
 	 * Handle a packet on the server side.
@@ -46,7 +47,7 @@ public abstract class AbstractPacket<REQ extends Message> implements Message<REQ
 	 * @param message TODO
 	 * @param player  the player reference
 	 */
-	public abstract void handleServerSide(REQ message, PlayerEntity player);
+	public abstract void handleServerSide(PlayerEntity player);
 
 	protected void writeString(String string, ByteBuf buf) {
 		buf.writeByte(string.length());

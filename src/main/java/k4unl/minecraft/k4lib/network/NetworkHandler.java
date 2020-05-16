@@ -17,6 +17,8 @@
 
 package k4unl.minecraft.k4lib.network;
 
+import k4unl.minecraft.k4lib.lib.Log;
+import k4unl.minecraft.k4lib.network.messages.AbstractPacket;
 import k4unl.minecraft.k4lib.network.messages.LocationDoublePacket;
 import k4unl.minecraft.k4lib.network.messages.LocationIntPacket;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -35,65 +37,75 @@ import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 public abstract class NetworkHandler {
 
-	private static SimpleChannel channel;
+    private static NetworkHandler instance;
+    private SimpleChannel channel;
 
-	public NetworkHandler() {
-		channel = NetworkRegistry.newSimpleChannel(new ResourceLocation(getModId(), "main"),
-				this::getProtocolVersion,
-				this.getProtocolVersion()::equals,
-				this.getProtocolVersion()::equals
-		);
-	}
+    public NetworkHandler() {
+        channel = NetworkRegistry.newSimpleChannel(new ResourceLocation(getModId(), "main"),
+                this::getProtocolVersion,
+                this.getProtocolVersion()::equals,
+                this.getProtocolVersion()::equals
+        );
+        instance = this;
+    }
 
-   /*
-    * The integer is the ID of the message, the Side is the side this message will be handled (received) on!
-    * Empty init would make no sense as there has to be at least one message added.
-    */
-   public static void init() {
-   }
 
-	public abstract String getModId();
+    public static NetworkHandler getInstance() {
+        return instance;
+    }
 
-	public abstract String getProtocolVersion();
+    public SimpleChannel getChannel() {
+        return channel;
+    }
 
-	/*
-	 * public static void registerMessage(){ INSTANCE.registerMessage(clazz, clazz,
-	 * discriminant++, Side.SERVER, discriminant++, Side.SERVER); }
-	 */
+    public <T extends AbstractPacket> void sendToAll(T message) {
+        Log.info("Sending a package of type " + message.getClass().getCanonicalName() + " to all on the server");
+        getChannel().send(PacketDistributor.ALL.noArg(), message);
+    }
 
-	public SimpleChannel getChannel() {
-		return channel;
-	}
+    public <T extends AbstractPacket> void sendTo(T message, ServerPlayerEntity player) {
+        Log.info("Sending a package of type " + message.getClass().getCanonicalName() + " to player " + player.getName());
+        getChannel().send(PacketDistributor.PLAYER.with(() -> player), message);
+    }
 
-	public void sendToAll(Message<Message> message) {
-		getChannel().send(PacketDistributor.ALL.noArg(), message);
-	}
+    /*
+     * public static void registerMessage(){ INSTANCE.registerMessage(clazz, clazz,
+     * discriminant++, Side.SERVER, discriminant++, Side.SERVER); }
+     */
 
-	public void sendTo(Message<Message> message, ServerPlayerEntity player) {
-		getChannel().send(PacketDistributor.PLAYER.with(() -> player), message);
-	}
+    public void sendToAllAround(LocationIntPacket message, World world, double distance) {
+        sendToAllAround(message, message.getTargetPoint(world, distance));
+    }
 
-	public void sendToAllAround(LocationIntPacket message, World world, double distance) {
-		sendToAllAround(message, message.getTargetPoint(world, distance));
-	}
+    public void sendToAllAround(LocationIntPacket message, World world) {
+        sendToAllAround(message, message.getTargetPoint(world));
+    }
 
-	public void sendToAllAround(LocationIntPacket message, World world) {
-		sendToAllAround(message, message.getTargetPoint(world));
-	}
+    public void sendToAllAround(LocationDoublePacket message, World world) {
+        sendToAllAround(message, message.getTargetPoint(world));
+    }
 
-	public void sendToAllAround(LocationDoublePacket message, World world) {
-		sendToAllAround(message, message.getTargetPoint(world));
-	}
+    public <T extends AbstractPacket> void sendToAllAround(T message, PacketDistributor.TargetPoint point) {
+        Log.info("Sending a package of type " + message.getClass().getCanonicalName() + " to ");
+        getChannel().send(PacketDistributor.NEAR.with(() -> point), message);
+    }
 
-	public void sendToAllAround(Message<Message> message, PacketDistributor.TargetPoint point) {
-		getChannel().send(PacketDistributor.NEAR.with(() -> point), message);
-	}
+    public <T extends AbstractPacket> void sendToDimension(T message, DimensionType dimensionType) {
+        getChannel().send(PacketDistributor.DIMENSION.with(() -> dimensionType), message);
+    }
 
-	public void sendToDimension(Message<Message> message, DimensionType dimensionType) {
-		getChannel().send(PacketDistributor.DIMENSION.with(() -> dimensionType), message);
-	}
+    public <T extends AbstractPacket> void sendToServer(T message) {
+        getChannel().sendToServer(message);
+    }
 
-	public void sendToServer(Message<Message> message) {
-		channel.sendToServer(message);
-	}
+    /*
+     * The integer is the ID of the message, the Side is the side this message will be handled (received) on!
+     * Empty init would make no sense as there has to be at least one message added.
+     */
+    public abstract void init();
+
+    public abstract String getModId();
+
+    public abstract String getProtocolVersion();
+
 }
